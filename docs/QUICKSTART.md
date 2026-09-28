@@ -64,6 +64,7 @@ Right-click the tray icon for these options:
 - **Make the overlays more or less see-through.** Settings → **Overlay** has sliders for the background and text opacity.
 - **Set your own CS target.** Settings → **Coaching** → **Target CS per minute**. Leave it at 0 to use a default for your role. The tracker hides its target for supports.
 - **Tell it what you know.** Settings → **Coaching** → **Standing notes** is sent with every plan. You could write, for example, "I struggle against poke" or "Patch 26.19 removed item X".
+- **Get a natural-sounding voice.** Settings → **Notifications** → **Voice type: Natural** → **Download voice** (about 85 MB, once). Choose Ryan or HFC, then click **Test voice**. Until it's downloaded, the built-in Windows voice is used.
 - **Too chatty?** In Settings → **Notifications** you can turn off reminder types, change the voice or its speed, or switch voice off and use a beep instead.
 - **Your focus carries over.** The focus from your last review, and your improvement plan's top priority, are added to your next game plan.
 - **Gank warnings are predictions** based on typical jungle paths. Read them as "be ready", not "it's happening".
