@@ -77,9 +77,9 @@ Right-click the tray icon for these options:
 | No overlays in game | Set League to **Borderless** (step 3). Press **Ctrl+Shift+O** in case you hid them. |
 | The runes window didn't appear | It appears once you've locked in your champion. If you closed it, it comes back in the next champ select. |
 | "No free rune page" | Delete one of your rune pages, or rename one to "LoL Coach". |
-| Hotkeys don't work while League is focused | Right-click LoL Coach in the Start menu, choose **Run as administrator**, and try again. |
+| Hotkeys don't work while League is focused | Update to version 0.3.1 or later, where hotkeys work without tabbing out. If they still don't, right-click LoL Coach in the Start menu, choose **Run as administrator**, and try again. |
 | "Couldn't build the plan" | Check your key with **Test connection** in Settings, then press **Ctrl+Shift+P** to retry. |
-| "High demand", "limiting requests" or "daily limit … used up" | Gemini's free tier limits how often you can use each model, and sometimes it's busy. The app automatically tries the backup models listed in Settings → **Setup**. Each has its own free quota. Daily limits reset at midnight Pacific time. |
+| "High demand", "limiting requests" or "daily limit … used up" | Gemini's free tier allows only a few requests per model each day (as few as 20), and it's often busy. The app automatically tries the backup models in Settings → **Setup**, which each have their own quota, and daily limits reset at midnight Pacific time. For more headroom, set up an **Other provider** in the same tab: Groq, OpenRouter and Mistral have their own free tiers, and a model on your own PC (Ollama or LM Studio) has no limits. Tick "try my other providers" to use it as a backup. |
 | No review after a game | Reviews skip remakes and modes other than Summoner's Rift. Otherwise, choose **Review last game** from the tray menu. |
 | Windows or your antivirus blocks the app | The app is unsigned, not harmful. Choose **More info → Run anyway**, or add an exception for LoL Coach in your antivirus. |
 
