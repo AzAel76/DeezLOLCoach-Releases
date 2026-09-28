@@ -18,7 +18,7 @@ Get **LoLCoach_x.y.z_x64-setup.exe** from the **[latest release](https://github.
 
 ## How to use it
 
-Read the **[quick start guide](docs/QUICKSTART.md)**. It covers setup, what you'll see during a game, hotkeys, tips and troubleshooting. You can also [download it as a standalone page](docs/LoLCoach-QuickStart.html) to open in any browser.
+Read the **[quick start guide](https://azael76.github.io/DeezLOLCoach-Releases/)**. It covers setup, what you'll see during a game, hotkeys, tips and troubleshooting. It's also [here as text](docs/QUICKSTART.md), and each release includes `LoLCoach-QuickStart.html` to open offline.
 
 ## Riot's rules
 
