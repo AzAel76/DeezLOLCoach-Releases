@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>LoL Coach Quick Start</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root {
+    --bg: #f3f5f8;
+    --surface: #ffffff;
+    --surface-2: #e9edf3;
+    --line: #d5dce6;
+    --text: #172233;
+    --muted: #5a6879;
+    --gold: #8c6b12;
+    --gold-soft: #f4e9c9;
+    --blue: #1f6fae;
+    --gank: #c2413a;
+    --objective: #8c6b12;
+    --lane: #1f6fae;
+    --power: #7a4fc4;
+    --macro: #2a8a5c;
+    /* The in-game panels are always dark, as they are in the app */
+    --hud-bg: #101824;
+    --hud-line: #2c3d54;
+    --hud-text: #eef2f6;
+    --hud-muted: #a4b1c2;
+    --hud-gold: #e2be62;
+    --hud-gank: #ee7b72;
+    --display: "Saira Semi Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+    --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0c131d;
+      --surface: #131d2a;
+      --surface-2: #1a2636;
+      --line: #273648;
+      --text: #e8edf3;
+      --muted: #9aa8b9;
+      --gold: #e2be62;
+      --gold-soft: #2b2616;
+      --blue: #6db6ea;
+      --gank: #ee7b72;
+      --objective: #e2be62;
+      --lane: #6db6ea;
+      --power: #b48ce8;
+      --macro: #7fd1a8;
+      --hud-bg: #0a1019;
+      --hud-line: #2c3d54;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0c131d;
+    --surface: #131d2a;
+    --surface-2: #1a2636;
+    --line: #273648;
+    --text: #e8edf3;
+    --muted: #9aa8b9;
+    --gold: #e2be62;
+    --gold-soft: #2b2616;
+    --blue: #6db6ea;
+    --gank: #ee7b72;
+    --objective: #e2be62;
+    --lane: #6db6ea;
+    --power: #b48ce8;
+    --macro: #7fd1a8;
+    --hud-bg: #0a1019;
+    --hud-line: #2c3d54;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 var(--body);
+    padding-inline: 20px;
+    padding-block: 0 64px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  a { color: var(--blue); text-underline-offset: 2px; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 3px; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+  h2 { font-size: 1.75rem; letter-spacing: 0.01em; }
+  h3 { font-size: 1.2rem; }
+  p { margin: 0; max-width: 65ch; }
+  kbd, .mono { font-family: var(--mono); font-size: 0.85em; }
+  kbd {
+    display: inline-block; padding: 1px 7px; border: 1px solid var(--line); border-bottom-width: 2px;
+    border-radius: 5px; background: var(--surface); color: var(--text); white-space: nowrap;
+  }
+  .label {
+    font-family: var(--display); text-transform: uppercase; letter-spacing: 0.12em;
+    font-size: 0.8rem; color: var(--gold); font-weight: 700;
+  }
+
+  /* Header */
+  header { padding-block: 56px 36px; display: grid; gap: 18px; }
+  header h1 { font-size: clamp(2.4rem, 7vw, 3.6rem); letter-spacing: 0.005em; }
+  header h1 span { color: var(--gold); }
+  .lede { font-size: 1.15rem; color: var(--muted); }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 0.95rem; }
+  .facts b { color: var(--text); font-weight: 600; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc a {
+    text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 12px; font-size: 0.9rem;
+  }
+  nav.toc a:hover { border-color: var(--gold); }
+
+  section { padding-block: 40px 8px; display: grid; gap: 18px; }
+  section + section { border-top: 1px solid var(--line); }
+
+  /* Setup steps: a real sequence, so they're numbered */
+  ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; counter-reset: step; }
+  ol.steps > li { counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 14px; }
+  ol.steps > li::before {
+    content: counter(step); font-family: var(--display); font-weight: 700; font-size: 1.3rem;
+    width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--gold-soft); color: var(--gold); border: 2px solid var(--gold);
+  }
+  .step { display: grid; gap: 8px; padding-top: 6px; }
+  .step ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+  .note {
+    font-size: 0.95rem; color: var(--muted); background: var(--surface-2);
+    border-radius: 8px; padding: 10px 14px;
+  }
+
+  /* Phases */
+  .phases { display: grid; gap: 14px; }
+  .phase {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 330px); gap: 18px; align-items: start;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px;
+  }
+  .phase .text { display: grid; gap: 6px; }
+  @media (max-width: 680px) { .phase { grid-template-columns: 1fr; } }
+
+  /* Mock-ups of the real overlay and pop-up */
+  .hud {
+    background: var(--hud-bg); color: var(--hud-text); border: 1px solid var(--hud-line);
+    border-radius: 10px; padding: 10px 14px 8px; font: 13px/1.35 "Segoe UI", var(--body);
+  }
+  .hud .t { color: var(--hud-gold); font-weight: 700; font-size: 1.1em; }
+  .hud .s { color: var(--hud-muted); font-weight: 600; margin-top: 4px; }
+  .hud .f { color: var(--hud-muted); font-size: 0.85em; margin-top: 6px; }
+  .hud ul { margin: 2px 0 0; padding-left: 16px; }
+  .hud .you { color: var(--hud-gold); font-weight: 700; }
+  .toast { border: 2px solid var(--hud-gank); font-size: 14px; }
+  .toast .k { color: var(--hud-gank); font-weight: 700; }
+  .toast .k span { color: var(--hud-muted); font-weight: 400; }
+  .ok { color: #7fd1a8; font-weight: 700; }
+  .x { color: #ee7b72; font-weight: 700; }
+
+  /* Reminder types */
+  .types { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex; gap: 6px; align-items: center; font-size: 0.9rem; padding: 3px 10px;
+    border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  }
+  .chip::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+
+  /* Tables */
+  .table { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.97rem; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  th { font-family: var(--display); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  td:first-child { white-space: nowrap; }
+
+  .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 12px; }
+  .tip { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+  .tip b { font-weight: 700; }
+
+  /* Troubleshooting */
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  details + details { margin-top: 8px; }
+  summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none; display: flex; gap: 10px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "+"; font-family: var(--mono); color: var(--gold); width: 1ch; }
+  details[open] summary::before { content: "−"; }
+  details > div { padding: 0 16px 14px 36px; color: var(--text); }
+
+  .rules { display: grid; gap: 10px; padding-left: 20px; margin: 0; }
+  footer { margin-top: 44px; color: var(--muted); font-size: 0.9rem; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+<style>
+  .cs-big { font-size: 1.7em; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,.15); margin: 5px 0 3px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 72%; background: #e2be62; border-radius: 3px; }
+  .rune-row { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; background: #2c3d54; border: 1px solid #4a5d77; }
+  .dot.key { width: 20px; height: 20px; background: #6b5a2a; border-color: #e2be62; }
+  .imp { display: inline-block; margin-top: 8px; background: #1f6fae; color: #fff; border-radius: 6px; padding: 4px 10px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="label">League of Legends · pre-game coach</div>
+    <h1>LoL Coach <span>quick start</span></h1>
+    <p class="lede">LoL Coach gets your rune page ready as soon as you lock in your champion, builds a game plan for your matchup, and shows it in small overlays while you play. It reminds you of key timings, tracks your CS, and reviews your game afterwards.</p>
+    <div class="facts">
+      <span><b>Setup:</b> about 5 minutes</span>
+      <span><b>Needs:</b> Windows 10 or 11</span>
+      <span><b>Cost:</b> free with a Gemini key</span>
+    </div>
+    <nav class="toc" aria-label="Sections">
+      <a href="#setup">Setup</a>
+      <a href="#play">During a game</a>
+      <a href="#hotkeys">Hotkeys</a>
+      <a href="#tips">Tips</a>
+      <a href="#help">Troubleshooting</a>
+      <a href="#report">Reporting a problem</a>
+      <a href="#rules">Good to know</a>
+    </nav>
+  </header>
+
+  <section id="setup" aria-labelledby="setup-h">
+    <h2 id="setup-h">Setup</h2>
+    <ol class="steps">
+      <li><div class="step">
+        <h3>Install</h3>
+        <ul>
+          <li>Download <b>LoLCoach_x.y.z_x64-setup.exe</b> from the <a href="https://github.com/AzAel76/DeezLOLCoach-Releases/releases/latest">releases page</a>.</li>
+          <li>Run it. It installs for your Windows user only, so it doesn't need administrator rights. If Windows shows "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>. This happens because the app isn't signed with a paid certificate.</li>
+          <li>LoL Coach starts when the installer finishes. You'll find it in the Start menu afterwards.</li>
+        </ul>
+        <p class="note">If nothing opens on an older Windows 10 PC, install Microsoft's free <a href="https://developer.microsoft.com/microsoft-edge/webview2/">WebView2 Runtime</a> and try again.</p>
+        <p><b>Updates:</b> the app checks for a new version when it starts and asks before installing it, never during a game. To check yourself, open Settings → <b>Updates</b>, or choose <b>Check for updates</b> from the tray menu.</p>
+      </div></li>
+      <li><div class="step">
+        <h3>Add a free AI key</h3>
+        <p>The Settings window opens the first time you run the app.</p>
+        <ul>
+          <li>On the <b>Setup</b> tab, keep <b>Gemini (free tier)</b> selected.</li>
+          <li>Click <b>Get a free Gemini key</b>, sign in with a Google account and create a key. You don't need a credit card.</li>
+          <li>Paste the key into <b>API key</b> and click <b>Test connection</b>. You should see "Connected".</li>
+          <li>Click <b>Save</b>.</li>
+        </ul>
+        <p>The app now runs in the system tray as a blue "C" icon near the clock. You may need to click the <b>^</b> arrow to see it.</p>
+      </div></li>
+      <li><div class="step">
+        <h3>Set League to Borderless</h3>
+        <p>In League, go to <b>Settings → Video → Window Mode</b> and choose <b>Borderless</b>. The overlays can't draw over Fullscreen mode.</p>
+      </div></li>
+    </ol>
+  </section>
+
+  <section id="play" aria-labelledby="play-h">
+    <h2 id="play-h">During a game</h2>
+    <p>The in-game overlays are see-through and click-through, so they never block your clicks. You can move them with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>.</p>
+    <div class="phases">
+      <div class="phase">
+        <div class="text">
+          <div class="label">Champ select</div>
+          <h3>Runes ready before the game loads</h3>
+          <p>As soon as you lock in your champion, the runes window shows the client's recommended page. A few seconds later it switches to a page tuned for your matchup.</p>
+          <p>Each page is imported into the client as a page called <b>LoL Coach</b>. The window also lists summoner spells and starting items. Your game plan is built while the game loads.</p>
+        </div>
+        <div class="hud" aria-label="Example runes window">
+          <div class="t">Aphelios <span style="color:var(--hud-muted);font-weight:400">Bot</span></div>
+          <div style="color:#7fd1a8;font-size:.85em">Tuned for this matchup</div>
+          <div class="s">Precision</div>
+          <div class="rune-row"><span class="dot key"></span><b>Lethal Tempo</b></div>
+          <div class="rune-row"><span class="dot"></span>Presence of Mind</div>
+          <div class="rune-row"><span class="dot"></span>Legend: Bloodline</div>
+          <div class="rune-row"><span class="dot"></span>Cut Down</div>
+          <div class="s">Domination</div>
+          <div class="rune-row"><span class="dot"></span>Taste of Blood · Treasure Hunter</div>
+          <span class="imp">Import runes</span> <span style="color:#7fd1a8;font-size:.85em">Imported as “LoL Coach”</span>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="text">
+          <div class="label">In game</div>
+          <h3>Only what matters now</h3>
+          <p>The game plan changes on the game clock: laning until 14:00 (when turret plating ends), then mid game until 25:00, then late game. Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> for the <b>Build</b> and <b>Draft</b> pages.</p>
+          <p>The CS tracker shows your CS, CS per minute and how you're doing against a target. Pop-ups at the top of the screen, read aloud, remind you of these:</p>
+          <div class="types">
+            <span class="chip" style="--c: var(--gank)">Gank windows</span>
+            <span class="chip" style="--c: var(--objective)">Objectives</span>
+            <span class="chip" style="--c: var(--lane)">Lane phase</span>
+            <span class="chip" style="--c: var(--power)">Power spikes</span>
+            <span class="chip" style="--c: var(--macro)">Macro</span>
+          </div>
+        </div>
+        <div style="display:grid; gap:10px">
+          <div class="hud" aria-label="Example game plan in the laning phase">
+            <div class="t">Aphelios: Laning (to 14:00)</div>
+            <div class="s">Plan</div>
+            <ul><li>Farm safely until level 6</li><li>Trade only with Lulu nearby</li></ul>
+            <div class="s">Danger</div>
+            <ul><li>Draven level 2 all-in</li></ul>
+            <div class="f"><b>Now</b> · Build · Draft</div>
+          </div>
+          <div class="hud" aria-label="Example CS tracker" style="max-width:220px">
+            <span class="cs-big">61</span> <span style="color:var(--hud-muted)">6.1/min · 10:00</span>
+            <div class="bar"><i></i></div>
+            <div style="color:var(--hud-gold);font-size:.92em">−14 vs 7.5/min pace</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="text">
+          <div class="label">After the game</div>
+          <h3>A review and one thing to work on</h3>
+          <p>About a minute after the game ends, a <b>Review</b> appears. It shows your key stats, what went well and what to fix, how you did against the plan, and <b>one focus for next game</b>.</p>
+          <p>That focus is added to your next game plan.</p>
+        </div>
+        <div class="hud" aria-label="Example post-game review">
+          <div class="t" style="color:#7fd1a8">Victory: Galio Mid</div>
+          <div style="color:var(--hud-muted)">3/2/3 · 80 CS @10 · +300 gold @10 vs LeBlanc</div>
+          <div class="s">Against the plan</div>
+          <div><span class="ok">✓</span> Dragon priority <span style="color:var(--hud-muted)">3 dragons</span></div>
+          <div><span class="x">✗</span> Avoid LeBlanc level 3 <span style="color:var(--hud-muted)">died at 6:15</span></div>
+          <div class="t" style="margin-top:6px">Focus next game</div>
+          <div style="color:var(--hud-gold);font-weight:600">Ward before walking past river after 15:00</div>
+        </div>
+      </div>
+    </div>
+    <p class="note"><b>Your rune pages are safe.</b> The app only creates or replaces the page called "LoL Coach". If you already have as many pages as your account allows, delete one or rename one to "LoL Coach", and the app will use it.</p>
+  </section>
+
+  <section id="hotkeys" aria-labelledby="hotkeys-h">
+    <h2 id="hotkeys-h">Hotkeys and the tray menu</h2>
+    <div class="table">
+      <table>
+        <thead><tr><th>Keys</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd></td><td>Show or hide the in-game overlays</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd></td><td>Switch the game plan between Now, Build and Draft</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></td><td>Build the game plan now, or rebuild it</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd></td><td>Move overlays on or off: drag them into place, then press again to lock them</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>You can change these in Settings, under <b>Hotkeys</b>.</p>
+    <p>Right-click the tray icon for these options:</p>
+    <ul style="margin:0; padding-left:20px; display:grid; gap:4px">
+      <li><b>Review last game</b>, to review a game that ended while the app wasn't running.</li>
+      <li><b>Game history &amp; improvement…</b>, which lists your past games with their reviews. Its second tab shows your trends and can build an <b>improvement plan</b> after 5–10 games.</li>
+      <li><b>Settings…</b>, <b>Check for updates</b>, <b>Open log file</b>, <b>Send log to Discord</b> and <b>Quit</b>. Double-clicking the icon also opens Settings.</li>
+    </ul>
+  </section>
+
+  <section id="tips" aria-labelledby="tips-h">
+    <h2 id="tips-h">Tips</h2>
+    <div class="tips">
+      <div class="tip"><b>See more of the game</b><span>Settings → Overlay has sliders for the background and text opacity.</span></div>
+      <div class="tip"><b>Set your own CS target</b><span>Settings → Coaching → <b>Target CS per minute</b>. Leave it at 0 to use a default for your role.</span></div>
+      <div class="tip"><b>Tell it what you know</b><span>Settings → Coaching → <b>Standing notes</b> is sent with every plan. You could write "I struggle against poke" or "Patch 26.19 removed item X".</span></div>
+      <div class="tip"><b>Too chatty?</b><span>In Settings → Notifications you can turn off reminder types, change the voice or its speed, or switch voice off and use a beep instead.</span></div>
+      <div class="tip"><b>Your focus carries over</b><span>Your last review's focus, and your improvement plan's top priority, are added to your next game plan.</span></div>
+      <div class="tip"><b>Gank warnings are predictions</b><span>They're based on typical jungle paths. Read them as "be ready", not "it's happening".</span></div>
+    </div>
+  </section>
+
+  <section id="help" aria-labelledby="help-h">
+    <h2 id="help-h">Troubleshooting</h2>
+    <div>
+      <details>
+        <summary>The overlay says "Waiting for the League client…"</summary>
+        <div>Open the League client. If League is installed somewhere other than <span class="mono">C:\Riot Games</span>, go to Settings → <b>Coaching</b> → <b>Client lockfile</b> and choose the <span class="mono">lockfile</span> file in your League folder.</div>
+      </details>
+      <details>
+        <summary>There are no overlays in game</summary>
+        <div>Set League to <b>Borderless</b> (setup step 3). Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> in case you hid them.</div>
+      </details>
+      <details>
+        <summary>The runes window didn't appear</summary>
+        <div>It appears once you've locked in your champion. If you closed it, it comes back in the next champ select.</div>
+      </details>
+      <details>
+        <summary>"No free rune page"</summary>
+        <div>Delete one of your rune pages, or rename one to "LoL Coach".</div>
+      </details>
+      <details>
+        <summary>Hotkeys don't work while League is focused</summary>
+        <div>Right-click LoL Coach in the Start menu, choose <b>Run as administrator</b>, and try again.</div>
+      </details>
+      <details>
+        <summary>"Couldn't build the plan"</summary>
+        <div>Check your key with <b>Test connection</b> in Settings, then press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to retry.</div>
+      </details>
+      <details>
+        <summary>"High demand", "limiting requests" or "daily limit … used up"</summary>
+        <div>Gemini's free tier limits how often you can use each model, and sometimes it's busy. The app automatically tries the backup models listed in Settings → <b>Setup</b>. Each has its own free quota. Daily limits reset at midnight Pacific time.</div>
+      </details>
+      <details>
+        <summary>No review after a game</summary>
+        <div>Reviews skip remakes and modes other than Summoner's Rift. Otherwise, choose <b>Review last game</b> from the tray menu.</div>
+      </details>
+      <details>
+        <summary>Windows or my antivirus blocks the app</summary>
+        <div>The app is unsigned, not harmful. Choose <b>More info → Run anyway</b>, or add an exception for LoL Coach in your antivirus.</div>
+      </details>
+    </div>
+  </section>
+
+  <section id="report" aria-labelledby="report-h">
+    <h2 id="report-h">Reporting a problem</h2>
+    <p>The app keeps a log of what it did and any errors in <span class="mono">lolcoach.log</span>. It contains no API keys. Your settings, history and log are in <span class="mono">%APPDATA%\LoLCoach</span>, and Settings → <b>Updates</b> shows the exact folder.</p>
+    <p>If something goes wrong, right-click the tray icon and choose <b>Send log to Discord</b>. A message appears on the overlay when the log has been sent. If it says no Discord link is set, paste the link you were given into Settings → <b>Coaching</b> → <b>Discord link for logs</b>.</p>
+  </section>
+
+  <section id="rules" aria-labelledby="rules-h">
+    <h2 id="rules-h">Good to know</h2>
+    <ul class="rules">
+      <li><b>It follows Riot's rules.</b> Your rune page and game plan are made before the game and never change during it. In game, the app reads only the game clock and your own CS. It never reads game memory, tracks enemies or cooldowns, or reacts to kills, objectives or turrets. It is not a Riot-endorsed app.</li>
+      <li><b>Your data stays with you.</b> Your key, settings and history are saved on your PC. Only the draft, your notes and your post-game stats are sent to the AI provider. On Gemini's free tier, Google may use those requests to improve its products.</li>
+      <li><b>Don't share <span class="mono">config.json</span>.</b> It contains your API key.</li>
+      <li><b>Moving from the portable version?</b> Copy <span class="mono">config.json</span> and the <span class="mono">history</span> folder from your old LoL Coach folder into <span class="mono">%APPDATA%\LoLCoach</span> to keep your settings and game history.</li>
+    </ul>
+  </section>
+
+  <footer>LoL Coach is a personal project and isn't affiliated with or endorsed by Riot Games.</footer>
+</div>
+
+</body>
+</html>
