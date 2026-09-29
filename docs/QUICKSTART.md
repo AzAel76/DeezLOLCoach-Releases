@@ -33,7 +33,7 @@ In League, go to **Settings → Video → Window Mode** and choose **Borderless*
 |---|---|
 | **Champ select** | As soon as you lock in your champion, a **runes window** shows the client's recommended rune page. A few seconds later it switches to a page tuned for your matchup. Each page is imported into the client as a page called **LoL Coach**, ready before the game loads. The window also lists summoner spells and starting items. |
 | **Loading screen** | Your game plan is built while the game loads. |
-| **In game** | The **game plan** overlay shows only what matters now: laning until 14:00 (when turret plating ends), then mid game until 25:00, then late game. It changes on the game clock. A small **CS tracker** shows your CS, CS per minute and how you're doing against a target. Pop-ups at the top of the screen, read aloud, remind you of gank windows, objectives, power spikes and more. |
+| **In game** | The **game plan** overlay shows only what matters now: laning until 14:00 (when turret plating ends), then mid game until 25:00, then late game. It changes on the game clock. The plan is written for your role: junglers get a first clear, gank timing and ward spots; laners get a trade pattern, wave plan and all-in window; supports get a lane pattern, vision plan and roam windows. A small **CS tracker** shows your CS, CS per minute and how you're doing against a target. Pop-ups at the top of the screen, read aloud, remind you of gank windows, objectives, power spikes and more. |
 | **After the game** | About a minute after the game ends, a **Review** appears: your key stats, what went well and what to fix, and **one focus for next game**. |
 
 The in-game overlays are see-through and click-through, so they never block your clicks.
@@ -45,7 +45,7 @@ The in-game overlays are see-through and click-through, so they never block your
 | Keys | What it does |
 |---|---|
 | **Ctrl+Shift+O** | Show or hide the in-game overlays |
-| **Ctrl+Shift+L** | Switch the game plan between **Now**, **Build** (items and skill order) and **Draft** (the two teams' strengths and threats) |
+| **Ctrl+Shift+L** | Switch the game plan between **Now**, **Build** (items and skill order) and **Matchup** (both teams' strengths and threats, and mechanics tips for your matchup) |
 | **Ctrl+Shift+P** | Build the game plan now, or rebuild it |
 | **Ctrl+Shift+M** | Move overlays on or off: drag the game plan and CS tracker where you want them, then press again to lock them |
 
