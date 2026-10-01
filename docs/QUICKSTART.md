@@ -31,8 +31,8 @@ In League, go to **Settings → Video → Window Mode** and choose **Borderless*
 
 | When | What you see |
 |---|---|
-| **Champ select** | As soon as you lock in your champion, a **runes window** shows the client's recommended rune page. A few seconds later it switches to a page tuned for your matchup. Each page is imported into the client as a page called **LoL Coach**, ready before the game loads. The window also lists summoner spells and starting items. |
-| **Loading screen** | Your game plan is built while the game loads. |
+| **Champ select** | As soon as you lock in your champion, a **runes window** shows the client's recommended rune page and summoner spells, and sets both in the client. Once every pick is in, the app tunes them to the whole draft. Runes are saved as a page called **LoL Coach**. Any recommended spell you already have keeps its key, and junglers always get Smite. The window also lists starting items. |
+| **Loading screen** | Your game plan is finished while the game loads. The app checks every champion's real lane (Smite shows the jungler). If the plan assumed a lane wrong, it's rebuilt for the right matchups. |
 | **In game** | The **game plan** overlay shows only what matters now: laning until 14:00 (when turret plating ends), then mid game until 25:00, then late game. It changes on the game clock. The plan is written for your role: junglers get a first clear, gank timing and ward spots; laners get a trade pattern, wave plan and all-in window; supports get a lane pattern, vision plan and roam windows. A small **CS tracker** shows your CS, CS per minute and how you're doing against a target. Pop-ups at the top of the screen, read aloud, remind you of gank windows, objectives, power spikes and more. |
 | **After the game** | About a minute after the game ends, a **Review** appears: your key stats, what went well and what to fix, and **one focus for next game**. |
 
