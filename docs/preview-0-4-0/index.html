@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<title>LoL Coach 0.4.0 Mockups</title>
+<style>
+  /* Mock-ups of the 0.4.0 design: a Windows 11-style app (Mica-like surfaces, Segoe UI Variable,
+     rounded 8px corners, left navigation) in a dark League-inspired palette. Everything is HTML/CSS. */
+  :root {
+    color-scheme: dark;
+    --page: #0b0e13;
+    --ink: #e9edf3;
+    --ink-2: #a7b2c1;
+    --ink-3: #6f7b8c;
+    --mica: #1a1e26;          /* window background */
+    --mica-2: #20252e;        /* nav pane */
+    --card: #262c36;          /* cards on the window */
+    --card-2: #2d3440;
+    --stroke: rgba(255, 255, 255, 0.07);
+    --stroke-2: rgba(255, 255, 255, 0.12);
+    --gold: #e2be62;          /* brand accent, from the icon */
+    --gold-ink: #1a1405;
+    --blue: #5aaee6;
+    --good: #6fd19c;
+    --warn: #e7b04f;
+    --bad: #f07a70;
+    --purple: #b48ce8;
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 14px/1.45 var(--font);
+    padding-inline: 20px;
+    padding-block: 0 80px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+  header.top { padding-block: 48px 28px; display: grid; gap: 10px; }
+  header.top h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.01em; }
+  header.top h1 span { color: var(--gold); }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+         color: var(--gold); }
+  .lede { color: var(--ink-2); max-width: 70ch; }
+  .draft-note { border: 1px solid rgba(226, 190, 98, 0.35); background: rgba(226, 190, 98, 0.08); color: var(--ink);
+                border-radius: 8px; padding: 10px 14px; max-width: 70ch; font-size: 13px; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  nav.toc a { color: var(--ink); text-decoration: none; border: 1px solid var(--stroke-2); border-radius: 999px;
+              padding: 4px 12px; font-size: 13px; }
+  nav.toc a:hover { border-color: var(--gold); }
+  section.mock { padding-block: 40px 8px; display: grid; gap: 16px; border-top: 1px solid var(--stroke); }
+  section.mock > h2 { font-size: 22px; font-weight: 600; }
+  .why { color: var(--ink-2); max-width: 75ch; }
+  .why b { color: var(--ink); }
+  .scroll { overflow-x: auto; padding-bottom: 6px; }
+
+  /* ---------- Windows 11-style window ---------- */
+  .win {
+    min-width: 980px; max-width: 1120px; border-radius: 8px; overflow: hidden;
+    background: linear-gradient(160deg, #1d222b 0%, var(--mica) 45%, #181b22 100%);
+    border: 1px solid var(--stroke-2);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.4);
+  }
+  .titlebar { height: 40px; display: flex; align-items: center; gap: 10px; padding-left: 12px; }
+  .titlebar .t { font-size: 12px; color: var(--ink-2); }
+  .titlebar .menu { width: 34px; height: 30px; border-radius: 6px; display: grid; place-items: center; color: var(--ink); }
+  .titlebar .menu:hover, .titlebar .menu.on { background: rgba(255, 255, 255, 0.06); }
+  .titlebar .caption { margin-left: auto; display: flex; height: 100%; }
+  .titlebar .caption span { width: 46px; display: grid; place-items: center; color: var(--ink-2); font-size: 12px; }
+  .body { display: grid; grid-template-columns: 220px 1fr; min-height: 560px; }
+  .pane { padding: 6px 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+  .pane .item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 6px; color: var(--ink);
+                position: relative; font-size: 14px; }
+  .pane .item svg { width: 16px; height: 16px; flex: none; opacity: 0.9; }
+  .pane .item.on { background: rgba(255, 255, 255, 0.06); }
+  .pane .item.on::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px;
+                           border-radius: 3px; background: var(--gold); }
+  .pane .sep { height: 1px; background: var(--stroke); margin: 8px 6px; }
+  .pane .spacer { flex: 1; }
+  .content { background: rgba(0, 0, 0, 0.16); border-top-left-radius: 8px; border-top: 1px solid var(--stroke);
+             border-left: 1px solid var(--stroke); padding: 22px 26px 26px; display: grid; gap: 16px; align-content: start; }
+  .content h3.page { font-size: 26px; font-weight: 600; }
+  .grid2 { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--stroke); border-radius: 8px; padding: 14px 16px; display: grid;
+          gap: 8px; align-content: start; }
+  .card h4 { margin: 0; font-size: 14px; font-weight: 600; font-family: var(--font-display); }
+  .label { font-size: 12px; color: var(--ink-3); }
+  .muted { color: var(--ink-2); }
+  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 2px 10px; border-radius: 999px;
+          background: var(--card-2); color: var(--ink-2); border: 1px solid var(--stroke); }
+  .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 4px; font-size: 13px;
+         background: var(--card-2); border: 1px solid var(--stroke-2); color: var(--ink); }
+  .btn.accent { background: var(--gold); color: var(--gold-ink); border-color: transparent; font-weight: 600; }
+  .btn.ghost { background: transparent; }
+  .kpi { font-family: var(--font-display); font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .kpi small { font-size: 13px; color: var(--ink-2); font-weight: 400; }
+  .tile { width: 44px; height: 44px; border-radius: 8px; flex: none; display: grid; place-items: center; font-weight: 700;
+          font-size: 13px; color: #0b0e13; }
+  .tile.sm { width: 34px; height: 34px; border-radius: 6px; font-size: 11px; }
+  .tile.round { border-radius: 50%; }
+  .champ-a { background: linear-gradient(135deg, #9fd6ff, #5a7fd6); }
+  .champ-b { background: linear-gradient(135deg, #f3b38f, #c45c4a); }
+  .champ-c { background: linear-gradient(135deg, #d8c3ff, #8a5bd6); }
+  .it { background: linear-gradient(135deg, #e9d18d, #9d7a2c); }
+  .it.b { background: linear-gradient(135deg, #b9c7d6, #5d6d80); }
+  .it.c { background: linear-gradient(135deg, #f1a4a4, #a14646); }
+  .it.d { background: linear-gradient(135deg, #a6e3c3, #3d8a66); }
+  .it.e { background: linear-gradient(135deg, #b8b0f5, #5b4fb8); }
+  .it.f { background: linear-gradient(135deg, #f5c79a, #b5652a); }
+  .rune { width: 30px; height: 30px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff3c4, #c99a2e);
+          flex: none; }
+  .rune.minor { width: 22px; height: 22px; background: radial-gradient(circle at 35% 35%, #e7eef7, #6f7f95); }
+  .rune.key { width: 42px; height: 42px; box-shadow: 0 0 0 2px var(--gold); }
+  table.t { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+  table.t th { text-align: left; font-weight: 600; color: var(--ink-3); font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--stroke); }
+  table.t td { padding: 8px; border-bottom: 1px solid var(--stroke); }
+  .win-col { color: var(--good); } .loss-col { color: var(--bad); }
+  .bar { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 3px; }
+  .steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .steps .arrow { color: var(--ink-3); }
+  .flyout { position: absolute; top: 40px; left: 8px; width: 206px; background: #2a303b; border: 1px solid var(--stroke-2);
+            border-radius: 8px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5); padding: 6px; display: grid; gap: 2px; z-index: 2; }
+  .flyout .fi { padding: 8px 10px; border-radius: 4px; display: flex; gap: 10px; align-items: center; font-size: 13px; }
+  .flyout .fi:hover, .flyout .fi.on { background: rgba(255, 255, 255, 0.06); }
+  .flyout .fi .kbd { margin-left: auto; color: var(--ink-3); font-size: 12px; }
+  .rel { position: relative; }
+  .setting { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--card); border: 1px solid var(--stroke);
+             border-radius: 6px; }
+  .setting .txt { display: grid; gap: 1px; }
+  .setting .txt b { font-weight: 400; }
+  .setting .ctl { margin-left: auto; display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: 13px; }
+  .toggle { width: 40px; height: 20px; border-radius: 10px; background: var(--gold); position: relative; }
+  .toggle::after { content: ""; position: absolute; right: 4px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold-ink); }
+  .toggle.off { background: transparent; border: 1px solid var(--ink-2); }
+  .toggle.off::after { left: 4px; right: auto; top: 3px; background: var(--ink-2); }
+  .select { min-width: 200px; height: 32px; border-radius: 4px; background: var(--card-2); border: 1px solid var(--stroke-2);
+            display: flex; align-items: center; padding: 0 10px; color: var(--ink); font-size: 13px; justify-content: space-between; }
+  .slider { width: 160px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.2); position: relative; }
+  .slider i { position: absolute; inset: 0 40% 0 0; background: var(--gold); border-radius: 2px; }
+  .slider b { position: absolute; left: 60%; top: -6px; width: 16px; height: 16px; border-radius: 50%; background: var(--gold);
+              border: 3px solid #2a303b; margin-left: -8px; }
+
+  /* ---------- in-game ---------- */
+  .game { position: relative; min-width: 980px; max-width: 1120px; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden;
+          border: 1px solid var(--stroke-2);
+          background:
+            radial-gradient(ellipse at 30% 60%, rgba(96, 140, 78, 0.55), transparent 55%),
+            radial-gradient(ellipse at 75% 30%, rgba(70, 110, 90, 0.6), transparent 50%),
+            radial-gradient(ellipse at 50% 90%, rgba(120, 100, 70, 0.5), transparent 60%),
+            linear-gradient(160deg, #2f4a33, #243828 50%, #2b3b2a); }
+  .game .river { position: absolute; left: -10%; right: -10%; top: 46%; height: 60px; transform: rotate(-24deg);
+                 background: linear-gradient(90deg, transparent, rgba(80, 140, 170, 0.35), transparent); }
+  .game .hud { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); width: 34%; height: 13%;
+               border-radius: 8px 8px 0 0; background: rgba(10, 14, 18, 0.85); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .game .mini { position: absolute; right: 10px; bottom: 10px; width: 17%; aspect-ratio: 1; border-radius: 4px;
+                background: rgba(10, 14, 18, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); }
+  .game .score { position: absolute; right: 10px; top: 8px; font-size: 12px; color: #dfe7ee; background: rgba(10, 14, 18, 0.6);
+                 padding: 2px 8px; border-radius: 4px; font-variant-numeric: tabular-nums; }
+  .ov { position: absolute; background: rgba(16, 20, 27, 0.58); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #eef2f6; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+  .ov.plan { right: 12px; top: 48px; width: 290px; padding: 10px 12px; display: grid; gap: 6px; font-size: 12.5px; }
+  .ov.plan .ph { display: flex; align-items: center; gap: 8px; }
+  .ov.plan .ph .phase { font-weight: 600; font-family: var(--font-display); }
+  .ov.plan .clock { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: 12px; }
+  .ov.plan .prog { height: 3px; border-radius: 2px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
+  .ov.plan .prog i { display: block; height: 100%; width: 52%; background: var(--gold); }
+  .ov.plan .l { color: var(--gold); font-weight: 600; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+  .ov.plan ul { margin: 0; padding-left: 16px; display: grid; gap: 2px; }
+  .ov.plan .tabs { display: flex; gap: 4px; margin-top: 2px; }
+  .ov.plan .tabs span { font-size: 11px; padding: 1px 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); color: var(--ink-2); }
+  .ov.plan .tabs span.on { background: rgba(226, 190, 98, 0.2); color: var(--gold); }
+  .ov.cs { right: 314px; top: 92px; padding: 8px 12px; display: grid; gap: 4px; min-width: 150px; }
+  .ov.cs .n { font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+  .ov.toast { left: 50%; top: 14px; transform: translateX(-50%); width: 420px; padding: 10px 14px; display: flex; gap: 12px;
+              align-items: center; border-left: 3px solid var(--bad); }
+  .ov.toast .k { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bad); }
+  .ov.toast > div { min-width: 0; }
+  .ov.toast .when { flex: none; margin-left: auto; font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .callout { position: absolute; font-size: 12px; color: var(--gold); background: rgba(11, 14, 19, 0.85); border: 1px dashed rgba(226, 190, 98, 0.6);
+             padding: 4px 8px; border-radius: 6px; }
+
+  /* ---------- icons ---------- */
+  .icons { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .icon-card { background: var(--card); border: 1px solid var(--stroke); border-radius: 8px; padding: 18px; display: grid; gap: 12px; justify-items: start; }
+  .icon-card svg.big { width: 120px; height: 120px; }
+  .sizes { display: flex; align-items: end; gap: 14px; }
+  .sizes svg { display: block; }
+  .tray { display: flex; align-items: center; gap: 10px; background: #202020; border-radius: 6px; padding: 6px 10px; }
+  .notes { display: grid; gap: 8px; max-width: 75ch; }
+  .notes li { margin-bottom: 4px; }
+  @media (max-width: 700px) { .icon-card svg.big { width: 96px; height: 96px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="tag">Design draft · not the current app</span>
+    <h1>LoL Coach <span>0.4.0</span> mockups</h1>
+    <p class="lede">Proposed look for the next major release, based on tester feedback: a native-feeling Windows app with one main window
+      (settings menu at the top left, everything else inside, happy on a second screen), cleaner see-through overlays, and a new coach icon.
+      All screens use example data.</p>
+    <p class="draft-note">These are mockups for feedback, made 1 October 2026 against v0.3.4. Nothing here is final, and some details
+      (such as exact layouts and colours) will change while building it.</p>
+    <nav class="toc" aria-label="Sections">
+      <a href="#icon">Icon</a><a href="#home">Home</a><a href="#champ">Champ select</a><a href="#overlays">In game</a>
+      <a href="#review">Review</a><a href="#settings">Settings</a><a href="#notes">Questions</a>
+    </nav>
+  </header>
+
+  <!-- ===================== ICON ===================== -->
+  <section class="mock" id="icon">
+    <h2>1. App icon: three coach concepts</h2>
+    <p class="why">Each keeps the gold and deep blue of the current icon so it's still recognisable, and has to read at 16 px in the tray.
+      <b>A</b> is a coach's whistle, <b>B</b> a tactics clipboard with a play drawn on it, <b>C</b> a shield-shaped crest with a whistle,
+      closest to League's own crest style.</p>
+    <div class="icons">
+      <!-- A: whistle -->
+      <div class="icon-card">
+        <svg class="big" viewBox="0 0 120 120" aria-label="Concept A: whistle">
+          <defs><linearGradient id="ga" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a6fae"/><stop offset="1" stop-color="#173f66"/></linearGradient></defs>
+          <rect x="6" y="6" width="108" height="108" rx="26" fill="url(#ga)"/>
+          <rect x="6" y="6" width="108" height="108" rx="26" fill="none" stroke="#e2be62" stroke-width="4"/>
+          <path d="M40 46 h36 a18 18 0 1 1 -18 18 v-6 h-18 z" fill="#e2be62"/>
+          <circle cx="76" cy="64" r="8" fill="#173f66"/>
+          <rect x="34" y="42" width="10" height="16" rx="3" fill="#f3dc9a"/>
+          <path d="M44 50 q-16 -26 -22 -14" fill="none" stroke="#f3dc9a" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <b>A · Whistle</b>
+        <div class="sizes" aria-label="Small sizes">
+          <svg width="32" height="32" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="26" fill="#21568a"/><path d="M40 46 h36 a18 18 0 1 1 -18 18 v-6 h-18 z" fill="#e2be62"/><circle cx="76" cy="64" r="8" fill="#21568a"/></svg>
+          <svg width="20" height="20" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="26" fill="#21568a"/><path d="M40 46 h36 a18 18 0 1 1 -18 18 v-6 h-18 z" fill="#e2be62"/></svg>
+          <div class="tray"><svg width="16" height="16" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="26" fill="#21568a"/><path d="M40 46 h36 a18 18 0 1 1 -18 18 v-6 h-18 z" fill="#e2be62"/></svg><span class="label">tray</span></div>
+        </div>
+      </div>
+      <!-- B: clipboard play -->
+      <div class="icon-card">
+        <svg class="big" viewBox="0 0 120 120" aria-label="Concept B: tactics clipboard">
+          <rect x="6" y="6" width="108" height="108" rx="26" fill="#173f66"/>
+          <rect x="28" y="22" width="64" height="80" rx="8" fill="#e2be62"/>
+          <rect x="46" y="16" width="28" height="12" rx="4" fill="#f3dc9a" stroke="#173f66" stroke-width="3"/>
+          <g stroke="#173f66" stroke-width="5" stroke-linecap="round" fill="none">
+            <path d="M40 48 l10 10 M50 48 l-10 10"/>
+            <circle cx="76" cy="82" r="6"/>
+            <path d="M48 72 q10 14 22 8" stroke-dasharray="1 9"/>
+          </g>
+          <path d="M66 76 l6 4 -7 3" fill="none" stroke="#173f66" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <b>B · Tactics clipboard</b>
+        <div class="sizes">
+          <svg width="32" height="32" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="26" fill="#173f66"/><rect x="28" y="22" width="64" height="80" rx="8" fill="#e2be62"/><path d="M40 48 l10 10 M50 48 l-10 10" stroke="#173f66" stroke-width="7" stroke-linecap="round"/><circle cx="76" cy="82" r="7" fill="none" stroke="#173f66" stroke-width="7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="26" fill="#173f66"/><rect x="28" y="22" width="64" height="80" rx="8" fill="#e2be62"/></svg>
+          <div class="tray"><svg width="16" height="16" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="26" fill="#173f66"/><rect x="28" y="22" width="64" height="80" rx="8" fill="#e2be62"/></svg><span class="label">tray</span></div>
+        </div>
+      </div>
+      <!-- C: crest -->
+      <div class="icon-card">
+        <svg class="big" viewBox="0 0 120 120" aria-label="Concept C: crest with whistle">
+          <defs><linearGradient id="gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3dc9a"/><stop offset="1" stop-color="#b8922f"/></linearGradient></defs>
+          <path d="M60 8 L104 22 V58 C104 84 84 102 60 112 C36 102 16 84 16 58 V22 Z" fill="url(#gc)"/>
+          <path d="M60 18 L95 29 V58 C95 79 79 94 60 102 C41 94 25 79 25 58 V29 Z" fill="#173f66"/>
+          <path d="M42 52 h28 a14 14 0 1 1 -14 14 v-5 h-14 z" fill="#e2be62"/>
+          <circle cx="70" cy="66" r="6" fill="#173f66"/>
+          <path d="M42 52 q-6 -14 4 -18" fill="none" stroke="#e2be62" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <b>C · Crest with whistle</b>
+        <div class="sizes">
+          <svg width="32" height="32" viewBox="0 0 120 120"><path d="M60 8 L104 22 V58 C104 84 84 102 60 112 C36 102 16 84 16 58 V22 Z" fill="#d6b04e"/><path d="M60 20 L94 30 V58 C94 78 79 92 60 100 C41 92 26 78 26 58 V30 Z" fill="#173f66"/><path d="M42 52 h28 a14 14 0 1 1 -14 14 v-5 h-14 z" fill="#e2be62"/></svg>
+          <svg width="20" height="20" viewBox="0 0 120 120"><path d="M60 8 L104 22 V58 C104 84 84 102 60 112 C36 102 16 84 16 58 V22 Z" fill="#d6b04e"/><path d="M60 22 L92 32 V58 C92 76 78 90 60 98 C42 90 28 76 28 58 V32 Z" fill="#173f66"/></svg>
+          <div class="tray"><svg width="16" height="16" viewBox="0 0 120 120"><path d="M60 8 L104 22 V58 C104 84 84 102 60 112 C36 102 16 84 16 58 V22 Z" fill="#d6b04e"/></svg><span class="label">tray</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="why">My pick is <b>A</b>: it says "coach" at a glance and survives being shrunk to the tray. C looks most like League but
+      loses its whistle below 32 px.</p>
+  </section>
+
+  <!-- ===================== HOME ===================== -->
+  <section class="mock" id="home">
+    <h2>2. Main window: Home</h2>
+    <p class="why">One window replaces the tray menu. The <b>menu at the top left</b> holds the quick actions; the left pane holds the pages.
+      It's a normal window, so it can sit on a second screen, and closing it keeps the app running in the tray.
+      Home answers "is everything ready?" at a glance: client connected, AI working, what's next.</p>
+    <div class="scroll">
+      <div class="win rel">
+        <div class="titlebar">
+          <div class="menu on" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <svg width="16" height="16" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="26" fill="#21568a"/><path d="M40 46 h36 a18 18 0 1 1 -18 18 v-6 h-18 z" fill="#e2be62"/></svg>
+          <span class="t">LoL Coach</span>
+          <div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div>
+        </div>
+        <div class="flyout" aria-label="Menu (open)">
+          <div class="fi on"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Settings<span class="kbd">Ctrl+,</span></div>
+          <div class="fi"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2v9M4.5 7.5 8 11l3.5-3.5M3 14h10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Check for updates</div>
+          <div class="fi"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 2h7l3 3v9H3z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Open log file</div>
+          <div class="fi"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8l12-5-4 11-2-5z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Send log to Discord</div>
+          <div class="fi"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5 6h6" stroke="currentColor" stroke-width="1.3"/></svg>Move overlays</div>
+          <div class="fi"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Quit LoL Coach</div>
+        </div>
+        <div class="body">
+          <div class="pane" style="padding-top: 210px">
+            <div class="item on"><svg viewBox="0 0 16 16"><path d="M2 7.5 8 2.5l6 5V14H2z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Home</div>
+            <div class="item"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 4v4l3 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Champ select</div>
+            <div class="item"><svg viewBox="0 0 16 16"><path d="M3 3h10v10H3zM3 7h10M7 7v6" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Game plan</div>
+            <div class="item"><svg viewBox="0 0 16 16"><path d="M2 13l4-5 3 3 5-7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>History &amp; trends</div>
+            <div class="spacer"></div>
+          </div>
+          <div class="content">
+            <div class="row"><h3 class="page">Good evening</h3><span class="pill"><span class="dot"></span>League client connected</span><span class="pill"><span class="dot"></span>Gemini ready</span></div>
+            <div class="grid2">
+              <div class="card">
+                <span class="label">NEXT GAME</span>
+                <h4>Waiting for champ select</h4>
+                <p class="muted" style="margin:0">When you lock in, your runes and summoner spells are set and the game plan is written while the game loads.</p>
+                <div class="row" style="margin-top:4px"><span class="btn accent">Open champ select view</span><span class="btn ghost">Show overlays</span></div>
+              </div>
+              <div class="card">
+                <span class="label">YOUR FOCUS</span>
+                <h4>Ward before crossing river after 15:00</h4>
+                <p class="muted" style="margin:0">From your last review. It's added to your next game plan.</p>
+                <div class="row"><span class="label">Improvement plan:</span><span class="pill">Mid-game deaths · 1.4 → target ≤ 1</span></div>
+              </div>
+            </div>
+            <div class="grid3">
+              <div class="card"><span class="label">LAST 10 GAMES</span><div class="kpi">6–4 <small>60% wins</small></div><div class="bar"><i style="width:60%;background:var(--good)"></i></div></div>
+              <div class="card"><span class="label">CS AT 10</span><div class="kpi">71 <small>target 75</small></div><div class="bar"><i style="width:86%;background:var(--warn)"></i></div></div>
+              <div class="card"><span class="label">DEATHS BEFORE 14:00</span><div class="kpi">1.6 <small>target ≤ 1</small></div><div class="bar"><i style="width:62%;background:var(--bad)"></i></div></div>
+            </div>
+            <div class="card">
+              <div class="row"><h4>Recent games</h4><span class="label" style="margin-left:auto">History &amp; trends →</span></div>
+              <table class="t">
+                <thead><tr><th>Champion</th><th>Result</th><th>K/D/A</th><th>CS @10</th><th>Focus given</th></tr></thead>
+                <tbody>
+                  <tr><td><div class="row"><span class="tile sm champ-a">AP</span>Aphelios · Bot</div></td><td class="win-col">Win</td><td>7/2/9</td><td>78</td><td class="muted">Ward before crossing river after 15:00</td></tr>
+                  <tr><td><div class="row"><span class="tile sm champ-b">LS</span>Lee Sin · Jungle</div></td><td class="loss-col">Loss</td><td>4/6/5</td><td>52</td><td class="muted">Ward enemy raptors at 2:50</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAMP SELECT ===================== -->
+  <section class="mock" id="champ">
+    <h2>3. Main window: Champ select</h2>
+    <p class="why">Everything for the next game on one page, filling in as champ select goes: both teams with their <b>confirmed or assumed
+      lanes</b>, the rune page and summoner spells (already set in the client), and the <b>full item set: six items plus boots</b>, which is
+      also saved to the client so it shows in the in-game shop. Small overlays in game; the detail lives here on your other screen.</p>
+    <div class="scroll">
+      <div class="win">
+        <div class="titlebar">
+          <div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <span class="t">LoL Coach</span>
+          <div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div>
+        </div>
+        <div class="body">
+          <div class="pane">
+            <div class="item"><svg viewBox="0 0 16 16"><path d="M2 7.5 8 2.5l6 5V14H2z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Home</div>
+            <div class="item on"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 4v4l3 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Champ select</div>
+            <div class="item"><svg viewBox="0 0 16 16"><path d="M3 3h10v10H3zM3 7h10M7 7v6" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Game plan</div>
+            <div class="item"><svg viewBox="0 0 16 16"><path d="M2 13l4-5 3 3 5-7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>History &amp; trends</div>
+          </div>
+          <div class="content">
+            <div class="row"><h3 class="page">Champ select</h3><span class="pill"><span class="dot" style="background:var(--warn)"></span>Finalisation · 0:24</span></div>
+            <div class="grid2">
+              <div class="card">
+                <div class="row"><span class="tile champ-a">AP</span><div><h4>Aphelios · Bot</h4><span class="label">Resource: mana · Tuned for this matchup</span></div>
+                  <span class="pill" style="margin-left:auto;color:var(--good)">Set in client ✓</span></div>
+                <div class="row" style="gap:14px;margin-top:6px">
+                  <div style="display:grid;gap:6px;justify-items:center"><span class="rune key"></span><span class="label">Lethal Tempo</span></div>
+                  <div style="display:grid;gap:6px"><div class="row"><span class="rune minor"></span><span class="rune minor"></span><span class="rune minor"></span><span class="label">Precision</span></div>
+                    <div class="row"><span class="rune minor"></span><span class="rune minor"></span><span class="label">Domination</span></div></div>
+                </div>
+                <div class="row" style="margin-top:4px"><span class="label">Spells</span><span class="tile sm" style="background:linear-gradient(135deg,#fff7b8,#e2be62)">F</span><span class="tile sm" style="background:linear-gradient(135deg,#c9ffd9,#3aa36a)">H</span>
+                  <span class="muted">Flash (F) · Heal (D)</span></div>
+                <p class="muted" style="margin:0">Play safe until two items: Draven wins early trades.</p>
+              </div>
+              <div class="card">
+                <h4>Lanes</h4>
+                <table class="t">
+                  <thead><tr><th>Lane</th><th>Your team</th><th>Enemy</th></tr></thead>
+                  <tbody>
+                    <tr><td class="muted">Top</td><td>Ornn</td><td>Darius</td></tr>
+                    <tr><td class="muted">Jungle</td><td>Lee Sin</td><td>Graves <span class="pill" style="font-size:11px">Smite ✓</span></td></tr>
+                    <tr><td class="muted">Mid</td><td>Ahri</td><td>LeBlanc</td></tr>
+                    <tr><td class="muted">Bot</td><td><b>Aphelios</b></td><td>Draven</td></tr>
+                    <tr><td class="muted">Support</td><td>Lulu</td><td>Nautilus <span class="label">(assumed)</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="row"><h4>Item set</h4><span class="pill" style="color:var(--good)">Saved to client: shows in the shop</span><span class="btn ghost" style="margin-left:auto;height:28px">Copy</span></div>
+              <div class="row" style="gap:18px;align-items:flex-start">
+                <div style="display:grid;gap:6px"><span class="label">Start</span><div class="row"><span class="tile it">DB</span><span class="tile it d">HP</span></div></div>
+                <div style="display:grid;gap:6px"><span class="label">First back</span><div class="steps"><span class="tile it b">BF</span><span class="arrow">→</span><span class="label">builds into<br>Infinity Edge</span></div></div>
+                <div style="display:grid;gap:6px"><span class="label">Full build</span>
+                  <div class="row"><span class="tile it">1</span><span class="tile it c">2</span><span class="tile it e">3</span><span class="tile it f">4</span><span class="tile it b">5</span><span class="tile it d">6</span><span class="tile it b" style="outline:2px solid var(--gold);outline-offset:2px">B</span></div>
+                  <span class="label">Infinity Edge · Phantom Dancer · Lord Dominik's · Bloodthirster · Guardian Angel · Mercurial · Berserker's Greaves</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OVERLAYS ===================== -->
+  <section class="mock" id="overlays">
+    <h2>4. In game: cleaner overlays</h2>
+    <p class="why">Fewer, quieter overlays: a frosted, see-through <b>phase card</b> with a thin progress bar to the next phase (laning ends at 14:00),
+      a compact <b>CS tracker</b>, and <b>reminders</b> as a slim banner instead of a box. Each can be moved and resized, and all of them fade
+      further when you press Tab for the scoreboard. Still clock-only: nothing reacts to what happens in the match.</p>
+    <div class="scroll">
+      <div class="game">
+        <div class="river"></div>
+        <div class="score">24 vs 18 · 2/4/3 · 75 CS · 9:12</div>
+        <div class="hud"></div><div class="mini"></div>
+        <div class="ov toast"><div><div class="k">Gank window</div><div>Graves' first clear may end bot side: ward tri-bush</div></div><span class="when">at 9:30</span></div>
+        <div class="ov cs"><span class="label" style="color:var(--ink-2)">CS</span><div class="row"><span class="n">71</span><span class="muted" style="font-size:12px">7.7/min</span></div>
+          <div class="bar" style="height:4px"><i style="width:92%;background:var(--good)"></i></div><span style="font-size:11.5px;color:var(--good)">+2 vs 7.5/min pace</span></div>
+        <div class="ov plan">
+          <div class="ph"><span class="tile sm round champ-a">AP</span><span class="phase">Laning</span><span class="clock">9:12 → 14:00</span></div>
+          <div class="prog"><i></i></div>
+          <span class="l">Trade pattern</span>
+          <ul><li>Hold Severum + Gravitum for trades when Draven throws axes wide</li><li>Back off when his W is up</li></ul>
+          <span class="l">Wave</span>
+          <ul><li>Slow push before 10:00 for dragon at 10:30</li></ul>
+          <div class="tabs"><span class="on">Now</span><span>Build</span><span>Matchup</span></div>
+        </div>
+        <div class="callout" style="right:20px;top:330px">Phase card · auto by clock</div>
+        <div class="callout" style="right:316px;top:190px">CS tracker</div>
+        <div class="callout" style="left:50%;top:76px;transform:translateX(-50%)">Reminder banner (read aloud)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REVIEW ===================== -->
+  <section class="mock" id="review">
+    <h2>5. Main window: Post-game review</h2>
+    <p class="why">The review opens in the main window after each game, laid out like a coach's notes: the verdict and numbers first, then a
+      timeline of key moments with what to do differently, then the one focus for next game.</p>
+    <div class="scroll">
+      <div class="win">
+        <div class="titlebar"><div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div><span class="t">LoL Coach</span><div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>
+        <div class="body">
+          <div class="pane">
+            <div class="item"><svg viewBox="0 0 16 16"><path d="M2 7.5 8 2.5l6 5V14H2z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Home</div>
+            <div class="item"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Champ select</div>
+            <div class="item"><svg viewBox="0 0 16 16"><path d="M3 3h10v10H3z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Game plan</div>
+            <div class="item on"><svg viewBox="0 0 16 16"><path d="M2 13l4-5 3 3 5-7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>History &amp; trends</div>
+          </div>
+          <div class="content">
+            <div class="row"><span class="tile champ-b">LS</span><div><h3 class="page" style="font-size:22px">Defeat · Lee Sin Jungle</h3><span class="muted">Good early ganks, lost tempo after 9:00 · 28:40</span></div></div>
+            <div class="grid3">
+              <div class="card"><span class="label">K / D / A</span><div class="kpi">4/6/5</div></div>
+              <div class="card"><span class="label">TAKEDOWNS BEFORE 14:00</span><div class="kpi">3 <small>target 1–2 by 10:00</small></div></div>
+              <div class="card"><span class="label">CS AT 10</span><div class="kpi">52 <small>target 55–65</small></div></div>
+            </div>
+            <div class="grid2">
+              <div class="card">
+                <h4>Key moments</h4>
+                <table class="t"><tbody>
+                  <tr><td style="color:var(--gold);width:56px">3:40</td><td>Died to Graves' invade on your blue<div style="color:var(--good)">→ Ward enemy raptors at 2:50 and path away</div></td></tr>
+                  <tr><td style="color:var(--gold)">9:10</td><td>Died 30 s before dragon<div style="color:var(--good)">→ Reset at 8:30 so you arrive full</div></td></tr>
+                  <tr><td style="color:var(--gold)">15:20</td><td>Face-checked river, lost baron setup<div style="color:var(--good)">→ Sweep first, then step in</div></td></tr>
+                </tbody></table>
+              </div>
+              <div class="card" style="border-color:rgba(226,190,98,0.45)">
+                <span class="label" style="color:var(--gold)">FOCUS NEXT GAME</span>
+                <h4 style="font-size:17px">Ward enemy raptors at 2:50 every game</h4>
+                <p class="muted" style="margin:0">Two early deaths came from invades you didn't see.</p>
+                <span class="label">How: set a mental timer at 2:45 and walk to river before your third camp.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SETTINGS ===================== -->
+  <section class="mock" id="settings">
+    <h2>6. Settings</h2>
+    <p class="why">Opened from the menu at the top left, in the style of Windows 11 Settings: categories on the left, one row per setting, each with
+      a plain description. Voice gets its own page with several voices to preview.</p>
+    <div class="scroll">
+      <div class="win">
+        <div class="titlebar"><div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div><span class="t">LoL Coach · Settings</span><div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>
+        <div class="body">
+          <div class="pane">
+            <div class="item"><span>AI provider</span></div>
+            <div class="item"><span>Champ select</span></div>
+            <div class="item on"><span>Voice &amp; reminders</span></div>
+            <div class="item"><span>Overlays</span></div>
+            <div class="item"><span>Hotkeys</span></div>
+            <div class="item"><span>Reviews &amp; history</span></div>
+            <div class="item"><span>Updates &amp; logs</span></div>
+          </div>
+          <div class="content">
+            <h3 class="page">Voice &amp; reminders</h3>
+            <div class="setting"><div class="txt"><b>Read reminders aloud</b><span class="label">Pop-ups are spoken as they appear.</span></div><div class="ctl">On<span class="toggle"></span></div></div>
+            <div class="setting"><div class="txt"><b>Voice</b><span class="label">Natural voices run on your PC and are downloaded once.</span></div>
+              <div class="ctl"><span class="select">Coach (deep, calm) <span>⌄</span></span><span class="btn">▶ Preview</span></div></div>
+            <div class="setting"><div class="txt"><b>Speaking style</b><span class="label">"Coach" adds short pauses and stresses times and places.</span></div><div class="ctl"><span class="select">Coach <span>⌄</span></span></div></div>
+            <div class="setting"><div class="txt"><b>Speed</b></div><div class="ctl"><span class="slider"><i></i><b></b></span>Normal</div></div>
+            <div class="setting"><div class="txt"><b>Warn before reminders</b><span class="label">How early a timed reminder appears.</span></div><div class="ctl"><span class="select">15 seconds <span>⌄</span></span></div></div>
+            <div class="setting"><div class="txt"><b>Gank windows</b></div><div class="ctl">On<span class="toggle"></span></div></div>
+            <div class="setting"><div class="txt"><b>Power spikes</b></div><div class="ctl">Off<span class="toggle off"></span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUESTIONS ===================== -->
+  <section class="mock" id="notes">
+    <h2>7. Questions for the tester</h2>
+    <ol class="notes">
+      <li><b>Icon:</b> A (whistle), B (clipboard) or C (crest)?</li>
+      <li><b>Main window:</b> should it open on its own when champ select starts, or only show a notification?</li>
+      <li><b>Item set:</b> is one full build (six items plus boots) enough, or do you want a second, situational set as well?</li>
+      <li><b>Overlays:</b> is the phase card the right size at 1080p? Would you rather it sits top-right (as now) or next to the minimap?</li>
+      <li><b>Voice:</b> which matters more: a deeper "coach" voice, or a faster, shorter delivery?</li>
+    </ol>
+  </section>
+</div>
+</body>
+</html>
