@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<title>LoL Coach Style Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap">
+<style>
+  /* Three style directions for 0.4.0, each built from the tester's answers to the first mockups.
+     Each .theme sets the same tokens; the components below only use tokens. */
+  :root {
+    color-scheme: dark;
+    --page: #0b0e13; --page-ink: #e9edf3; --page-ink-2: #a7b2c1;
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  }
+  .theme-fluent {
+    --win: linear-gradient(160deg, #1d222b 0%, #1a1e26 45%, #181b22 100%);
+    --content: rgba(0, 0, 0, 0.16); --card: #262c36; --card-2: #2d3440;
+    --ink: #e9edf3; --ink-2: #a7b2c1; --ink-3: #6f7b8c;
+    --stroke: rgba(255, 255, 255, 0.07); --stroke-2: rgba(255, 255, 255, 0.12);
+    --accent: #e2be62; --accent-ink: #1a1405; --nav-on: rgba(255, 255, 255, 0.06);
+    --good: #6fd19c; --warn: #e7b04f; --bad: #f07a70;
+    --radius: 8px; --card-radius: 8px; --heading: var(--font-display); --heading-case: none; --heading-spacing: -0.01em;
+    --ov-bg: rgba(16, 20, 27, 0.58); --ov-stroke: rgba(255, 255, 255, 0.1); --ov-label: #e2be62;
+  }
+  .theme-hextech {
+    --win: linear-gradient(180deg, #091428 0%, #010a13 100%);
+    --content: transparent; --card: rgba(1, 10, 19, 0.75); --card-2: #1e2328;
+    --ink: #f0e6d2; --ink-2: #a09b8c; --ink-3: #5b5a56;
+    --stroke: rgba(120, 90, 40, 0.55); --stroke-2: #785a28;
+    --accent: #c8aa6e; --accent-ink: #010a13; --nav-on: rgba(200, 170, 110, 0.1);
+    --good: #0ac8b9; --warn: #c8aa6e; --bad: #e0574d;
+    --radius: 2px; --card-radius: 0; --heading: "Cinzel", "Times New Roman", serif; --heading-case: uppercase; --heading-spacing: 0.06em;
+    --ov-bg: rgba(1, 10, 19, 0.72); --ov-stroke: #785a28; --ov-label: #0ac8b9;
+  }
+  .theme-light {
+    color-scheme: light;
+    --win: linear-gradient(160deg, #f6f8fb 0%, #eef2f7 100%);
+    --content: rgba(255, 255, 255, 0.6); --card: #ffffff; --card-2: #f3f5f8;
+    --ink: #17202c; --ink-2: #4c5868; --ink-3: #7c8796;
+    --stroke: rgba(15, 30, 50, 0.08); --stroke-2: rgba(15, 30, 50, 0.16);
+    --accent: #1f5fa8; --accent-ink: #ffffff; --nav-on: rgba(31, 95, 168, 0.08);
+    --good: #1f8a52; --warn: #a36a00; --bad: #c0392b;
+    --radius: 8px; --card-radius: 8px; --heading: var(--font-display); --heading-case: none; --heading-spacing: -0.01em;
+    --ov-bg: rgba(250, 251, 253, 0.78); --ov-stroke: rgba(15, 30, 50, 0.14); --ov-label: #1f5fa8;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--page-ink); font: 14px/1.45 var(--font); padding-inline: 20px; padding-block: 0 80px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+  header.top { padding-block: 48px 24px; display: grid; gap: 10px; }
+  header.top h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.01em; }
+  header.top h1 span { color: #e2be62; }
+  .tag { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #e2be62; }
+  .lede { color: var(--page-ink-2); max-width: 72ch; margin: 0; }
+  a { color: #e2be62; }
+  .answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 6px; }
+  .answer { border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 12px; background: #141922; display: grid; gap: 2px; }
+  .answer span { font-size: 12px; color: var(--page-ink-2); }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc a { color: var(--page-ink); text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px; padding: 4px 12px; font-size: 13px; }
+  section.block { padding-block: 40px 8px; display: grid; gap: 16px; border-top: 1px solid rgba(255, 255, 255, 0.07); }
+  section.block > h2 { font-family: var(--font-display); font-size: 22px; font-weight: 600; }
+  .why { color: var(--page-ink-2); max-width: 75ch; margin: 0; }
+  .why b { color: var(--page-ink); }
+  .scroll { overflow-x: auto; padding-bottom: 6px; }
+
+  /* crest variants */
+  .crests { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .crest-card { background: #1a1f28; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 18px; display: grid; gap: 12px; justify-items: start; }
+  .crest-card svg.big { width: 110px; height: 110px; }
+  .sizes { display: flex; align-items: end; gap: 14px; }
+  .sizes svg { display: block; }
+  .bar16 { display: flex; align-items: center; gap: 8px; background: #202020; border-radius: 6px; padding: 6px 10px; font-size: 12px; color: #a7b2c1; }
+  .bar16.light { background: #eef0f3; color: #4c5868; }
+
+  /* window */
+  .win { min-width: 980px; max-width: 1120px; background: var(--win); color: var(--ink); border: 1px solid var(--stroke-2);
+         border-radius: var(--radius); overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5); font-family: var(--font); }
+  .theme-hextech.win { border: 1px solid #785a28; box-shadow: 0 0 0 1px #010a13, 0 0 0 2px #3c2f16, 0 30px 80px rgba(0, 0, 0, 0.6); }
+  .titlebar { height: 40px; display: flex; align-items: center; gap: 10px; padding-left: 12px; }
+  .titlebar .menu { width: 34px; height: 30px; border-radius: 6px; display: grid; place-items: center; color: var(--ink); }
+  .titlebar .t { font-size: 12px; color: var(--ink-2); }
+  .theme-hextech .titlebar .t { font-family: var(--heading); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .caption { margin-left: auto; display: flex; height: 100%; }
+  .caption span { width: 46px; display: grid; place-items: center; color: var(--ink-2); font-size: 12px; }
+  .body { display: grid; grid-template-columns: 210px 1fr; min-height: 560px; }
+  .pane { padding: 6px 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+  .nav { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 6px; position: relative; font-size: 14px; color: var(--ink); }
+  .theme-hextech .nav { border-radius: 0; font-family: var(--heading); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+  .nav.on { background: var(--nav-on); color: var(--ink); }
+  .nav.on::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: var(--accent); }
+  .theme-hextech .nav.on::before { top: 0; bottom: 0; width: 2px; border-radius: 0; }
+  .content { background: var(--content); border-top: 1px solid var(--stroke); border-left: 1px solid var(--stroke);
+             border-top-left-radius: var(--radius); padding: 22px 26px 26px; display: grid; gap: 14px; align-content: start; }
+  .theme-hextech .content { border-color: #463714; }
+  h3.page { font-family: var(--heading); font-size: 26px; font-weight: 600; text-transform: var(--heading-case); letter-spacing: var(--heading-spacing); }
+  .theme-hextech h3.page { font-size: 22px; color: #f0e6d2; }
+  .grid2 { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--stroke); border-radius: var(--card-radius); padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+  .theme-light .card { box-shadow: 0 1px 2px rgba(15, 30, 50, 0.06); }
+  .theme-hextech .card { position: relative; border-color: #463714; }
+  .theme-hextech .card::before { content: ""; position: absolute; inset: 3px; border: 1px solid rgba(200, 170, 110, 0.18); pointer-events: none; }
+  .card h4 { font-family: var(--heading); font-size: 14px; font-weight: 600; text-transform: var(--heading-case); letter-spacing: var(--heading-spacing); }
+  .theme-hextech .card h4 { font-size: 12.5px; color: var(--accent); }
+  .label { font-size: 12px; color: var(--ink-3); }
+  .theme-hextech .label { letter-spacing: 0.06em; text-transform: uppercase; font-size: 11px; }
+  .muted { color: var(--ink-2); }
+  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 2px 10px; border-radius: 999px; background: var(--card-2);
+          color: var(--ink-2); border: 1px solid var(--stroke); }
+  .theme-hextech .pill { border-radius: 0; border-color: #463714; }
+  .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
+  .btn { display: inline-flex; align-items: center; height: 30px; padding: 0 14px; border-radius: 4px; font-size: 13px; background: var(--card-2);
+         border: 1px solid var(--stroke-2); color: var(--ink); }
+  .btn.accent { background: var(--accent); color: var(--accent-ink); border-color: transparent; font-weight: 600; }
+  .theme-hextech .btn { border-radius: 0; font-family: var(--heading); letter-spacing: 0.08em; text-transform: uppercase; font-size: 11.5px; }
+  .theme-hextech .btn.accent { background: linear-gradient(180deg, #1e2328, #010a13); color: #cdbe91; border: 2px solid #c8aa6e; }
+  .tile { width: 42px; height: 42px; border-radius: 8px; flex: none; display: grid; place-items: center; font-weight: 700; font-size: 12px; color: #0b0e13; }
+  .tile.sm { width: 32px; height: 32px; border-radius: 6px; font-size: 11px; }
+  .theme-hextech .tile { border-radius: 0; box-shadow: 0 0 0 1px #785a28; }
+  .champ-a { background: linear-gradient(135deg, #9fd6ff, #5a7fd6); }
+  .it-1 { background: linear-gradient(135deg, #e9d18d, #9d7a2c); } .it-2 { background: linear-gradient(135deg, #f1a4a4, #a14646); }
+  .it-3 { background: linear-gradient(135deg, #b8b0f5, #5b4fb8); } .it-4 { background: linear-gradient(135deg, #f5c79a, #b5652a); }
+  .it-5 { background: linear-gradient(135deg, #b9c7d6, #5d6d80); } .it-6 { background: linear-gradient(135deg, #a6e3c3, #3d8a66); }
+  .slot { display: grid; gap: 4px; justify-items: center; width: 64px; text-align: center; font-size: 11px; color: var(--ink-2); line-height: 1.2; }
+  .group { display: grid; gap: 6px; }
+  .group .row { align-items: flex-start; }
+  .group .gl { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+  .divider { width: 1px; align-self: stretch; background: var(--stroke-2); margin: 0 4px; }
+  .when { font-size: 12px; color: var(--ink-2); display: grid; gap: 2px; }
+  .when b { color: var(--ink); font-weight: 600; }
+  .rune { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e7eef7, #6f7f95); flex: none; }
+  .rune.key { width: 40px; height: 40px; background: radial-gradient(circle at 35% 35%, #fff3c4, #c99a2e); box-shadow: 0 0 0 2px var(--accent); }
+  table.t { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.t th { text-align: left; font-weight: 600; color: var(--ink-3); font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--stroke); }
+  table.t td { padding: 7px 8px; border-bottom: 1px solid var(--stroke); }
+  .theme-hextech table.t th { letter-spacing: 0.06em; text-transform: uppercase; font-size: 11px; }
+  .opened { position: absolute; right: 16px; top: 50px; display: flex; gap: 10px; align-items: center; padding: 10px 14px; font-size: 13px;
+            background: var(--card-2); border: 1px solid var(--stroke-2); border-radius: var(--radius); color: var(--ink);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); }
+  .opened .x { color: var(--ink-3); margin-left: 6px; }
+
+  /* phase card sample in the same style */
+  .pair { display: grid; grid-template-columns: 1fr 330px; gap: 16px; align-items: start; }
+  .gamebg { border-radius: 8px; padding: 18px; min-height: 260px; display: grid; align-content: start; justify-items: end;
+            background: radial-gradient(ellipse at 30% 70%, rgba(96, 140, 78, 0.6), transparent 60%), linear-gradient(160deg, #2f4a33, #243828 60%, #2b3b2a); }
+  .phasecard { width: 290px; padding: 10px 12px; display: grid; gap: 6px; font-size: 12.5px; color: #eef2f6; background: var(--ov-bg);
+               border: 1px solid var(--ov-stroke); border-radius: var(--radius); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+               text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); }
+  .theme-light .phasecard { color: #17202c; text-shadow: none; }
+  .phasecard .ph { display: flex; align-items: center; gap: 8px; }
+  .phasecard .ph b { font-family: var(--heading); text-transform: var(--heading-case); letter-spacing: var(--heading-spacing); }
+  .phasecard .clock { margin-left: auto; color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .phasecard .prog { height: 3px; background: rgba(127, 127, 127, 0.25); border-radius: 2px; overflow: hidden; }
+  .phasecard .prog i { display: block; height: 100%; width: 52%; background: var(--accent); }
+  .phasecard .l { color: var(--ov-label); font-weight: 600; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .phasecard ul { margin: 0; padding-left: 16px; }
+  .notes li { margin-bottom: 4px; }
+  @media (max-width: 860px) { .pair { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="tag">Design draft · round 2</span>
+    <h1>LoL Coach <span>0.4.0</span>: style options</h1>
+    <p class="lede">Three looks for the same screens, built from the tester's answers to the <a href="../">first mockups</a>. Each shows the
+      champ select page (which now opens by itself) with the item set, and the phase card in that style. All data is example data.
+      Made 2 October 2026 against v0.3.4.</p>
+    <div class="answers">
+      <div class="answer"><b>Icon: crest</b><span>Refined below so the whistle survives at tray size.</span></div>
+      <div class="answer"><b>Window opens on its own</b><span>When champ select starts, with a notice you can dismiss.</span></div>
+      <div class="answer"><b>Item set: two layouts</b><span>4 core + boots + 2 situational, or 3 core + boots + 3 situational.</span></div>
+      <div class="answer"><b>Phase card: keep it</b><span>Same layout, restyled to match each look.</span></div>
+      <div class="answer"><b>Voice: coach</b><span>Deeper and calmer, with pauses on times and places.</span></div>
+    </div>
+    <nav class="toc" aria-label="Sections"><a href="#crest">Crest icon</a><a href="#fluent">1 · Fluent Dark</a><a href="#hextech">2 · Hextech</a><a href="#light">3 · Clean Light</a><a href="#pick">What to pick</a></nav>
+  </header>
+
+  <!-- ===================== CREST ===================== -->
+  <section class="block" id="crest">
+    <h2>Crest icon, refined</h2>
+    <p class="why">The first crest lost its whistle below 32 px. These variants make the whistle bigger and simpler, so it still reads
+      in the tray and taskbar. <b>C2</b> drops the inner border at small sizes; <b>C3</b> fills the crest gold and makes the whistle dark.</p>
+    <div class="crests">
+      <div class="crest-card">
+        <svg class="big" viewBox="0 0 120 120" aria-label="C1: original crest">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3dc9a"/><stop offset="1" stop-color="#b8922f"/></linearGradient></defs>
+          <path d="M60 8 L104 22 V58 C104 84 84 102 60 112 C36 102 16 84 16 58 V22 Z" fill="url(#g1)"/>
+          <path d="M60 18 L95 29 V58 C95 79 79 94 60 102 C41 94 25 79 25 58 V29 Z" fill="#173f66"/>
+          <path d="M42 52 h28 a14 14 0 1 1 -14 14 v-5 h-14 z" fill="#e2be62"/><circle cx="70" cy="66" r="6" fill="#173f66"/>
+          <path d="M42 52 q-6 -14 4 -18" fill="none" stroke="#e2be62" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <b>C1 · As picked</b>
+        <div class="sizes">
+          <svg width="32" height="32" viewBox="0 0 120 120"><path d="M60 8 L104 22 V58 C104 84 84 102 60 112 C36 102 16 84 16 58 V22 Z" fill="#d6b04e"/><path d="M60 20 L94 30 V58 C94 78 79 92 60 100 C41 92 26 78 26 58 V30 Z" fill="#173f66"/><path d="M42 52 h28 a14 14 0 1 1 -14 14 v-5 h-14 z" fill="#e2be62"/></svg>
+          <svg width="16" height="16" viewBox="0 0 120 120"><path d="M60 8 L104 22 V58 C104 84 84 102 60 112 C36 102 16 84 16 58 V22 Z" fill="#d6b04e"/><path d="M60 22 L92 32 V58 C92 76 78 90 60 98 C42 90 28 76 28 58 V32 Z" fill="#173f66"/></svg>
+          <span class="bar16">16 px: whistle lost</span>
+        </div>
+      </div>
+      <div class="crest-card">
+        <svg class="big" viewBox="0 0 120 120" aria-label="C2: bigger whistle">
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3dc9a"/><stop offset="1" stop-color="#b8922f"/></linearGradient></defs>
+          <path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="url(#g2)"/>
+          <path d="M60 15 L97 27 V58 C97 80 80 96 60 104 C40 96 23 80 23 58 V27 Z" fill="#173f66"/>
+          <path d="M34 48 h38 a20 20 0 1 1 -20 20 v-6 h-18 z" fill="#f0d27e"/><circle cx="72" cy="68" r="8" fill="#173f66"/>
+        </svg>
+        <b>C2 · Bigger whistle</b>
+        <div class="sizes">
+          <svg width="32" height="32" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#d6b04e"/><path d="M60 15 L97 27 V58 C97 80 80 96 60 104 C40 96 23 80 23 58 V27 Z" fill="#173f66"/><path d="M34 48 h38 a20 20 0 1 1 -20 20 v-6 h-18 z" fill="#f0d27e"/></svg>
+          <svg width="16" height="16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#173f66" stroke="#d6b04e" stroke-width="10"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#f0d27e"/></svg>
+          <span class="bar16">16 px: simplified</span>
+        </div>
+      </div>
+      <div class="crest-card">
+        <svg class="big" viewBox="0 0 120 120" aria-label="C3: gold crest, dark whistle">
+          <defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e2a6"/><stop offset="1" stop-color="#c39a38"/></linearGradient></defs>
+          <path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="url(#g3)"/>
+          <path d="M34 48 h38 a20 20 0 1 1 -20 20 v-6 h-18 z" fill="#173f66"/><circle cx="72" cy="68" r="8" fill="#e8c977"/>
+          <path d="M34 48 q-8 -16 6 -22" fill="none" stroke="#173f66" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <b>C3 · Gold crest</b>
+        <div class="sizes">
+          <svg width="32" height="32" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#dcb557"/><path d="M34 48 h38 a20 20 0 1 1 -20 20 v-6 h-18 z" fill="#173f66"/></svg>
+          <svg width="16" height="16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#dcb557"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#173f66"/></svg>
+          <span class="bar16 light">reads on light taskbars too</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STYLE 1 ===================== -->
+  <section class="block" id="fluent">
+    <h2>1 · Fluent Dark</h2>
+    <p class="why">The first mockup's look, refined: Windows 11 dark, gold accent from the crest. Calm and native. Item set shown in
+      layout <b>A: 4 core + boots + 2 situational</b>.</p>
+    <div class="scroll">
+      <div class="win theme-fluent">
+        <div class="titlebar">
+          <div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <svg width="16" height="16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#173f66" stroke="#d6b04e" stroke-width="10"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#f0d27e"/></svg>
+          <span class="t">LoL Coach</span>
+          <div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div>
+        </div>
+        <div class="opened">Opened for champ select<span class="x">&#x2715;</span></div>
+        <div class="body">
+          <div class="pane">
+            <div class="nav">Home</div><div class="nav on">Champ select</div><div class="nav">Game plan</div><div class="nav">History &amp; trends</div>
+          </div>
+          <div class="content">
+            <div class="row"><h3 class="page">Champ select</h3><span class="pill"><span class="dot" style="background:var(--warn)"></span>Finalisation · 0:24</span></div>
+            <div class="grid2">
+              <div class="card">
+                <div class="row"><span class="tile champ-a">AP</span><div><h4>Aphelios · Bot</h4><span class="label">Resource: mana · tuned for this matchup</span></div><span class="pill" style="margin-left:auto;color:var(--good)">Set in client ✓</span></div>
+                <div class="row" style="gap:14px"><span class="rune key"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span><span class="label">Precision</span><span class="rune"></span><span class="rune"></span><span class="label">Domination</span></div>
+                <span class="muted">Flash (F) · Heal (D)</span>
+              </div>
+              <div class="card">
+                <h4>Lanes</h4>
+                <table class="t"><thead><tr><th>Lane</th><th>Yours</th><th>Enemy</th></tr></thead><tbody>
+                  <tr><td class="muted">Jungle</td><td>Lee Sin</td><td>Graves <span class="label">Smite ✓</span></td></tr>
+                  <tr><td class="muted">Bot</td><td><b>Aphelios</b></td><td>Draven</td></tr>
+                  <tr><td class="muted">Support</td><td>Lulu</td><td>Nautilus <span class="label">(assumed)</span></td></tr></tbody></table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="row"><h4>Item set · layout A</h4><span class="pill" style="color:var(--good)">Saved to the client shop</span></div>
+              <div class="row" style="align-items:flex-start;gap:14px">
+                <div class="group"><span class="gl">Core</span><div class="row" style="gap:6px">
+                  <div class="slot"><span class="tile it-1">1</span>Infinity Edge</div><div class="slot"><span class="tile it-2">2</span>Phantom Dancer</div>
+                  <div class="slot"><span class="tile it-3">3</span>Lord Dominik's</div><div class="slot"><span class="tile it-4">4</span>Bloodthirster</div></div></div>
+                <div class="group"><span class="gl">Boots</span><div class="slot"><span class="tile it-5">B</span>Berserker's</div></div>
+                <span class="divider"></span>
+                <div class="group"><span class="gl">Situational · last 2 slots</span>
+                  <div class="when"><span><b>Guardian Angel</b>: if their divers reach you</span><span><b>Mercurial Scimitar</b>: if Nautilus hook-locks you</span><span><b>Mortal Reminder</b>: if they stack healing</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pair theme-fluent">
+      <div class="gamebg"><div class="phasecard">
+        <div class="ph"><span class="tile sm champ-a" style="border-radius:50%">AP</span><b>Laning</b><span class="clock">9:12 → 14:00</span></div>
+        <div class="prog"><i></i></div><span class="l">Trade pattern</span>
+        <ul><li>Severum + Gravitum when Draven throws axes wide</li><li>Back off when his W is up</li></ul></div></div>
+      <p class="why">Phase card in Fluent Dark: unchanged layout, frosted and see-through.</p>
+    </div>
+  </section>
+
+  <!-- ===================== STYLE 2 ===================== -->
+  <section class="block" id="hextech">
+    <h2>2 · Hextech</h2>
+    <p class="why">Inspired by the League client itself: near-black navy, thin gold frames, teal highlights and engraved capitals for headings.
+      Feels part of the game, less like a Windows tool. Item set shown in layout <b>B: 3 core + boots + 3 situational</b>.</p>
+    <div class="scroll">
+      <div class="win theme-hextech">
+        <div class="titlebar">
+          <div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="#c8aa6e" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <svg width="16" height="16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#dcb557"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#010a13"/></svg>
+          <span class="t">LoL Coach</span>
+          <div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div>
+        </div>
+        <div class="opened">Opened for champ select<span class="x">&#x2715;</span></div>
+        <div class="body">
+          <div class="pane">
+            <div class="nav">Home</div><div class="nav on">Champ select</div><div class="nav">Game plan</div><div class="nav">History</div>
+          </div>
+          <div class="content">
+            <div class="row"><h3 class="page">Champ select</h3><span class="pill"><span class="dot" style="background:var(--good)"></span>Finalisation · 0:24</span></div>
+            <div class="grid2">
+              <div class="card">
+                <div class="row"><span class="tile champ-a">AP</span><div><h4>Aphelios · Bot</h4><span class="label">Mana · tuned for this matchup</span></div><span class="pill" style="margin-left:auto;color:var(--good)">Set in client</span></div>
+                <div class="row" style="gap:14px"><span class="rune key"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span><span class="label">Precision</span><span class="rune"></span><span class="rune"></span><span class="label">Domination</span></div>
+                <span class="muted">Flash (F) · Heal (D)</span>
+              </div>
+              <div class="card">
+                <h4>Lanes</h4>
+                <table class="t"><thead><tr><th>Lane</th><th>Yours</th><th>Enemy</th></tr></thead><tbody>
+                  <tr><td class="muted">Jungle</td><td>Lee Sin</td><td>Graves <span class="label" style="color:var(--good)">Smite</span></td></tr>
+                  <tr><td class="muted">Bot</td><td><b>Aphelios</b></td><td>Draven</td></tr>
+                  <tr><td class="muted">Support</td><td>Lulu</td><td>Nautilus <span class="label">assumed</span></td></tr></tbody></table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="row"><h4>Item set · layout B</h4><span class="pill" style="color:var(--good)">Saved to the client shop</span></div>
+              <div class="row" style="align-items:flex-start;gap:14px">
+                <div class="group"><span class="gl">Core</span><div class="row" style="gap:6px">
+                  <div class="slot"><span class="tile it-1">1</span>Infinity Edge</div><div class="slot"><span class="tile it-2">2</span>Phantom Dancer</div>
+                  <div class="slot"><span class="tile it-3">3</span>Lord Dominik's</div></div></div>
+                <div class="group"><span class="gl">Boots</span><div class="slot"><span class="tile it-5">B</span>Berserker's</div></div>
+                <span class="divider"></span>
+                <div class="group"><span class="gl">Situational · 3 slots</span>
+                  <div class="row" style="gap:6px"><div class="slot"><span class="tile it-4">S</span>Bloodthirster</div><div class="slot"><span class="tile it-6">S</span>Guardian Angel</div><div class="slot"><span class="tile it-2">S</span>Mercurial</div></div>
+                  <span class="label">Hover a slot for when to buy it</span></div>
+              </div>
+            </div>
+            <div class="row"><span class="btn accent">Import again</span><span class="btn">Open game plan</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pair theme-hextech">
+      <div class="gamebg"><div class="phasecard">
+        <div class="ph"><span class="tile sm champ-a">AP</span><b>Laning</b><span class="clock">9:12 → 14:00</span></div>
+        <div class="prog"><i></i></div><span class="l">Trade pattern</span>
+        <ul><li>Severum + Gravitum when Draven throws axes wide</li><li>Back off when his W is up</li></ul></div></div>
+      <p class="why">Phase card in Hextech: same layout, gold frame and teal labels like the game's own tooltips.</p>
+    </div>
+  </section>
+
+  <!-- ===================== STYLE 3 ===================== -->
+  <section class="block" id="light">
+    <h2>3 · Clean Light</h2>
+    <p class="why">Windows 11 light mode with a blue accent and gold details. Easiest to read on a bright second screen during the day;
+      it can follow Windows' light/dark setting. Item set in layout <b>A</b>.</p>
+    <div class="scroll">
+      <div class="win theme-light">
+        <div class="titlebar">
+          <div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="#17202c" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <svg width="16" height="16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#dcb557"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#173f66"/></svg>
+          <span class="t">LoL Coach</span>
+          <div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div>
+        </div>
+        <div class="opened">Opened for champ select<span class="x">&#x2715;</span></div>
+        <div class="body">
+          <div class="pane">
+            <div class="nav">Home</div><div class="nav on">Champ select</div><div class="nav">Game plan</div><div class="nav">History &amp; trends</div>
+          </div>
+          <div class="content">
+            <div class="row"><h3 class="page">Champ select</h3><span class="pill"><span class="dot" style="background:var(--warn)"></span>Finalisation · 0:24</span></div>
+            <div class="grid2">
+              <div class="card">
+                <div class="row"><span class="tile champ-a">AP</span><div><h4>Aphelios · Bot</h4><span class="label">Resource: mana · tuned for this matchup</span></div><span class="pill" style="margin-left:auto;color:var(--good)">Set in client ✓</span></div>
+                <div class="row" style="gap:14px"><span class="rune key"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span><span class="label">Precision</span><span class="rune"></span><span class="rune"></span><span class="label">Domination</span></div>
+                <span class="muted">Flash (F) · Heal (D)</span>
+              </div>
+              <div class="card">
+                <h4>Lanes</h4>
+                <table class="t"><thead><tr><th>Lane</th><th>Yours</th><th>Enemy</th></tr></thead><tbody>
+                  <tr><td class="muted">Jungle</td><td>Lee Sin</td><td>Graves <span class="label">Smite ✓</span></td></tr>
+                  <tr><td class="muted">Bot</td><td><b>Aphelios</b></td><td>Draven</td></tr>
+                  <tr><td class="muted">Support</td><td>Lulu</td><td>Nautilus <span class="label">(assumed)</span></td></tr></tbody></table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="row"><h4>Item set · layout A</h4><span class="pill" style="color:var(--good)">Saved to the client shop</span></div>
+              <div class="row" style="align-items:flex-start;gap:14px">
+                <div class="group"><span class="gl">Core</span><div class="row" style="gap:6px">
+                  <div class="slot"><span class="tile it-1">1</span>Infinity Edge</div><div class="slot"><span class="tile it-2">2</span>Phantom Dancer</div>
+                  <div class="slot"><span class="tile it-3">3</span>Lord Dominik's</div><div class="slot"><span class="tile it-4">4</span>Bloodthirster</div></div></div>
+                <div class="group"><span class="gl">Boots</span><div class="slot"><span class="tile it-5">B</span>Berserker's</div></div>
+                <span class="divider"></span>
+                <div class="group"><span class="gl">Situational · last 2 slots</span>
+                  <div class="when"><span><b>Guardian Angel</b>: if their divers reach you</span><span><b>Mercurial Scimitar</b>: if Nautilus hook-locks you</span><span><b>Mortal Reminder</b>: if they stack healing</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pair theme-light">
+      <div class="gamebg"><div class="phasecard">
+        <div class="ph"><span class="tile sm champ-a" style="border-radius:50%">AP</span><b>Laning</b><span class="clock">9:12 → 14:00</span></div>
+        <div class="prog"><i></i></div><span class="l">Trade pattern</span>
+        <ul><li>Severum + Gravitum when Draven throws axes wide</li><li>Back off when his W is up</li></ul></div></div>
+      <p class="why">Phase card in Clean Light: a light frosted panel. Over the dark map, a light panel stands out more, which is good for
+        glances and less good for blending in. The overlays could stay dark while the main window is light.</p>
+    </div>
+  </section>
+
+  <section class="block" id="pick">
+    <h2>What to pick</h2>
+    <ol class="notes">
+      <li><b>Style:</b> 1 Fluent Dark, 2 Hextech or 3 Clean Light? Mixing is possible, such as Hextech headings on Fluent Dark.</li>
+      <li><b>Crest:</b> C1, C2 or C3?</li>
+      <li><b>Item set:</b> layout A (4 core + boots + 2 situational with "when to buy" notes) or layout B (3 core + boots + 3 situational slots)?</li>
+    </ol>
+    <p class="why">My recommendation: <b>Fluent Dark</b> for the main window (it looks native, which was the original ask) with <b>C2</b>,
+      and <b>layout A</b>, because the "when to buy" notes are where the coaching is.</p>
+  </section>
+</div>
+</body>
+</html>
