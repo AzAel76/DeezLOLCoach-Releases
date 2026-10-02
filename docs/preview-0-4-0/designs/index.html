@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<title>LoL Coach Layout Designs</title>
+<style>
+  /* Round 3: three different overall designs (how the app is organised), all in the Fluent Dark theme.
+     Themes are separate (round 2) and apply to any of these. */
+  :root {
+    color-scheme: dark;
+    --page: #0b0e13; --ink: #e9edf3; --ink-2: #a7b2c1; --ink-3: #6f7b8c;
+    --win: linear-gradient(160deg, #1d222b 0%, #1a1e26 45%, #181b22 100%);
+    --content: rgba(0, 0, 0, 0.16); --card: #262c36; --card-2: #2d3440;
+    --stroke: rgba(255, 255, 255, 0.07); --stroke-2: rgba(255, 255, 255, 0.12);
+    --gold: #e2be62; --gold-ink: #1a1405; --blue: #5aaee6; --good: #6fd19c; --warn: #e7b04f; --bad: #f07a70; --purple: #b48ce8;
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 14px/1.45 var(--font); padding-inline: 20px; padding-block: 0 80px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); text-wrap: balance; }
+  a { color: var(--gold); }
+  header.top { padding-block: 48px 24px; display: grid; gap: 10px; }
+  header.top h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.01em; }
+  header.top h1 span { color: var(--gold); }
+  .tag { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+  .lede { color: var(--ink-2); max-width: 74ch; margin: 0; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc a { color: var(--ink); text-decoration: none; border: 1px solid var(--stroke-2); border-radius: 999px; padding: 4px 12px; font-size: 13px; }
+  section.block { padding-block: 40px 8px; display: grid; gap: 16px; border-top: 1px solid var(--stroke); }
+  section.block > h2 { font-size: 22px; font-weight: 600; }
+  .why { color: var(--ink-2); max-width: 78ch; margin: 0; }
+  .why b { color: var(--ink); }
+  .scroll { overflow-x: auto; padding-bottom: 6px; }
+  .proscons { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .pc { border: 1px solid var(--stroke-2); border-radius: 8px; padding: 12px 14px; background: #141922; }
+  .pc h4 { font-size: 13px; margin-bottom: 4px; }
+  .pc ul { margin: 0; padding-left: 18px; color: var(--ink-2); }
+  .pc.good h4 { color: var(--good); } .pc.bad h4 { color: var(--warn); }
+
+  /* shared window parts */
+  .win { background: var(--win); border: 1px solid var(--stroke-2); border-radius: 8px; overflow: hidden; position: relative;
+         box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5); }
+  .titlebar { height: 40px; display: flex; align-items: center; gap: 10px; padding-left: 12px; border-bottom: 1px solid var(--stroke); }
+  .titlebar .menu { width: 34px; height: 30px; border-radius: 6px; display: grid; place-items: center; }
+  .titlebar .t { font-size: 12px; color: var(--ink-2); }
+  .caption { margin-left: auto; display: flex; height: 100%; }
+  .caption span { width: 46px; display: grid; place-items: center; color: var(--ink-2); font-size: 12px; }
+  .card { background: var(--card); border: 1px solid var(--stroke); border-radius: 8px; padding: 12px 14px; display: grid; gap: 8px; align-content: start; }
+  .card h4 { font-size: 13.5px; font-weight: 600; }
+  .label { font-size: 12px; color: var(--ink-3); }
+  .cap { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-3); }
+  .muted { color: var(--ink-2); }
+  .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 2px 10px; border-radius: 999px; background: var(--card-2);
+          color: var(--ink-2); border: 1px solid var(--stroke); white-space: nowrap; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); display: inline-block; }
+  .btn { display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 4px; font-size: 13px; background: var(--card-2);
+         border: 1px solid var(--stroke-2); color: var(--ink); white-space: nowrap; }
+  .btn.accent { background: var(--gold); color: var(--gold-ink); border-color: transparent; font-weight: 600; }
+  .tile { width: 36px; height: 36px; border-radius: 6px; flex: none; display: grid; place-items: center; font-weight: 700; font-size: 11px; color: #0b0e13; }
+  .tile.sm { width: 28px; height: 28px; border-radius: 5px; font-size: 10px; }
+  .tile.lg { width: 48px; height: 48px; border-radius: 8px; font-size: 13px; }
+  .ca { background: linear-gradient(135deg, #9fd6ff, #5a7fd6); }
+  .i1 { background: linear-gradient(135deg, #e9d18d, #9d7a2c); } .i2 { background: linear-gradient(135deg, #f1a4a4, #a14646); }
+  .i3 { background: linear-gradient(135deg, #b8b0f5, #5b4fb8); } .i4 { background: linear-gradient(135deg, #f5c79a, #b5652a); }
+  .i5 { background: linear-gradient(135deg, #b9c7d6, #5d6d80); } .i6 { background: linear-gradient(135deg, #a6e3c3, #3d8a66); }
+  .rune { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e7eef7, #6f7f95); flex: none; display: inline-block; }
+  .rune.key { width: 32px; height: 32px; background: radial-gradient(circle at 35% 35%, #fff3c4, #c99a2e); box-shadow: 0 0 0 2px var(--gold); }
+  table.t { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.t th { text-align: left; font-weight: 600; color: var(--ink-3); font-size: 11px; padding: 5px 6px; border-bottom: 1px solid var(--stroke); }
+  table.t td { padding: 6px; border-bottom: 1px solid var(--stroke); }
+  .res { font-size: 10.5px; color: var(--ink-3); }
+  .ok { color: var(--good); } .assumed { color: var(--warn); }
+  .crest16 { width: 16px; height: 16px; flex: none; }
+  ul.tight { margin: 0; padding-left: 16px; display: grid; gap: 3px; }
+
+  /* ---------- 1. Command Center ---------- */
+  .cc { min-width: 1100px; }
+  .cc .bar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--stroke); background: rgba(0, 0, 0, 0.12); }
+  .cc .phase-strip { display: flex; gap: 4px; }
+  .cc .phase-strip span { font-size: 12px; padding: 4px 10px; border-radius: 999px; color: var(--ink-3); }
+  .cc .phase-strip span.on { background: rgba(226, 190, 98, 0.16); color: var(--gold); font-weight: 600; }
+  .cc .phase-strip span.done { color: var(--ink-2); }
+  .cc .cols { display: grid; grid-template-columns: 260px 1fr 300px; gap: 12px; padding: 12px; }
+  .cc .thesis { border-left: 3px solid var(--gold); padding: 6px 10px; background: rgba(226, 190, 98, 0.07); border-radius: 0 6px 6px 0; }
+  .cc .tl { position: relative; height: 54px; margin-top: 4px; }
+  .cc .tl .axis { position: absolute; left: 0; right: 0; top: 22px; height: 2px; background: var(--stroke-2); }
+  .cc .tl .m { position: absolute; top: 15px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #1a1e26; margin-left: -6px; }
+  .cc .tl .tick { position: absolute; top: 32px; font-size: 10.5px; color: var(--ink-3); transform: translateX(-50%); }
+  .cc .tl .now { position: absolute; top: 4px; bottom: 18px; width: 2px; background: var(--gold); }
+  .cc .foot { display: flex; gap: 12px; padding: 0 12px 12px; }
+  .cc .foot .card { flex: 1; }
+
+  /* ---------- 2. Game Flow ---------- */
+  .gf { min-width: 1100px; }
+  .stepper { display: flex; align-items: center; gap: 0; padding: 14px 20px; border-bottom: 1px solid var(--stroke); }
+  .step { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-3); }
+  .step .n { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600;
+             border: 1px solid var(--stroke-2); }
+  .step.done { color: var(--ink-2); } .step.done .n { background: rgba(111, 209, 156, 0.18); color: var(--good); border-color: transparent; }
+  .step.on { color: var(--ink); font-weight: 600; } .step.on .n { background: var(--gold); color: var(--gold-ink); border-color: transparent; }
+  .step-line { flex: 1; height: 1px; background: var(--stroke-2); margin: 0 12px; min-width: 30px; }
+  .gf .stage { display: grid; grid-template-columns: 1.35fr 1fr; gap: 16px; padding: 20px 48px 24px 24px; position: relative; }
+  .gf .hero { display: flex; gap: 14px; align-items: center; }
+  .gf .hero h3 { font-size: 24px; font-weight: 600; }
+  .gf .big-items { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; }
+  .gf .slot { display: grid; gap: 3px; justify-items: center; width: 60px; text-align: center; font-size: 10.5px; color: var(--ink-2); line-height: 1.2; }
+  .gf .check { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--stroke); }
+  .gf .box { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--ink-2); flex: none; margin-top: 2px; display: grid; place-items: center; font-size: 12px; }
+  .gf .box.on { background: var(--good); border-color: var(--good); color: #0b0e13; }
+  .gf .next { display: flex; gap: 10px; align-items: center; padding: 10px 14px; border: 1px dashed var(--stroke-2); border-radius: 8px; color: var(--ink-2); }
+  .drawer-tab { position: absolute; right: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; background: var(--card-2);
+                border: 1px solid var(--stroke-2); border-right: none; border-radius: 6px 0 0 6px; padding: 12px 6px; font-size: 12px; color: var(--ink-2); }
+  .mini-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .mini { border: 1px solid var(--stroke-2); border-radius: 8px; background: #161a21; padding: 12px; display: grid; gap: 6px; font-size: 12.5px; }
+  .mini b { font-family: var(--font-display); }
+
+  /* ---------- 3. Companion ---------- */
+  .desk { min-width: 1100px; height: 640px; position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--stroke-2);
+          background: #05070a; display: grid; grid-template-columns: 1fr 360px; }
+  .client { position: relative; margin: 26px 0 26px 26px; border-radius: 4px; overflow: hidden; border: 1px solid #2b2b26;
+            background: radial-gradient(ellipse at 50% 30%, #1c2a3a, #0a0f15 70%); }
+  .client .ct { height: 30px; background: #0a0d10; border-bottom: 1px solid #2b2b26; display: flex; align-items: center; padding: 0 12px; font-size: 11px; color: #887f6a; letter-spacing: 0.1em; }
+  .client .slots { position: absolute; left: 20px; top: 70px; display: grid; gap: 10px; }
+  .client .slots.r { left: auto; right: 20px; }
+  .client .slots div { width: 150px; height: 56px; border: 1px solid #3a3528; background: rgba(20, 24, 28, 0.8); }
+  .client .grid { position: absolute; left: 50%; top: 90px; transform: translateX(-50%); display: grid; grid-template-columns: repeat(6, 44px); gap: 6px; }
+  .client .grid i { width: 44px; height: 44px; background: rgba(120, 110, 90, 0.25); border: 1px solid #3a3528; }
+  .client .lbl { position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); font-size: 12px; color: #887f6a; letter-spacing: 0.08em; }
+  .comp { margin: 26px 26px 26px 12px; background: var(--win); border: 1px solid var(--stroke-2); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); }
+  .comp .head { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--stroke); }
+  .comp .head .phase { font-size: 12px; color: var(--gold); font-weight: 600; }
+  .comp .stack { padding: 8px; display: grid; gap: 8px; overflow: hidden; }
+  .acc { background: var(--card); border: 1px solid var(--stroke); border-radius: 8px; }
+  .acc .h { display: flex; align-items: center; gap: 8px; padding: 9px 12px; font-size: 13px; font-weight: 600; }
+  .acc .h .chev { margin-left: auto; color: var(--ink-3); font-weight: 400; }
+  .acc .b { padding: 0 12px 12px; display: grid; gap: 8px; }
+  .acc .sum { font-weight: 400; color: var(--ink-2); font-size: 12px; }
+  .comp .dock { margin-top: auto; padding: 8px 10px; border-top: 1px solid var(--stroke); display: flex; gap: 6px; }
+  .snap { position: absolute; right: 386px; top: 290px; font-size: 12px; color: var(--gold); background: rgba(11, 14, 19, 0.85);
+          border: 1px dashed rgba(226, 190, 98, 0.6); padding: 4px 8px; border-radius: 6px; }
+
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.cmp th, table.cmp td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--stroke); vertical-align: top; }
+  table.cmp th { color: var(--ink-3); font-size: 12px; font-weight: 600; }
+  table.cmp td:first-child { color: var(--ink-2); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="tag">Design draft · round 3 · layouts</span>
+    <h1>LoL Coach <span>0.4.0</span>: three layout designs</h1>
+    <p class="lede">Three different ways to organise the app: what's on screen when, and how you move around. Each uses the Fluent Dark
+      theme; the <a href="../styles/">themes</a> (Fluent Dark, Hextech, Clean Light) apply to any of them. All three keep what the tester
+      asked for: the window opens itself at champ select, settings sit in the menu at the top left, the crest icon, the full item set,
+      and the in-game phase card unchanged. Made 2 October 2026 against v0.3.4, with example data.</p>
+    <nav class="toc" aria-label="Sections"><a href="#command">1 · Command Center</a><a href="#flow">2 · Game Flow</a><a href="#companion">3 · Companion</a><a href="#compare">Compare</a></nav>
+  </header>
+
+  <!-- ===================== 1. COMMAND CENTER ===================== -->
+  <section class="block" id="command">
+    <h2>1 · Command Center</h2>
+    <p class="why"><b>Everything at once, on your second screen.</b> No pages to click through: one wide screen with the draft on the left, the
+      game plan in the middle and your loadout on the right. The strip at the top follows the game, and each column updates in place
+      (in game, the middle column shows the current phase and the reminder timeline moves along).</p>
+    <div class="scroll">
+      <div class="win cc">
+        <div class="titlebar">
+          <div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <svg class="crest16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#173f66" stroke="#d6b04e" stroke-width="10"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#f0d27e"/></svg>
+          <span class="t">LoL Coach</span>
+          <div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div>
+        </div>
+        <div class="bar">
+          <div class="phase-strip"><span class="done">Lobby</span><span class="on">Champ select · 0:24</span><span>Loading</span><span>In game</span><span>Review</span></div>
+          <span class="pill" style="margin-left:auto"><span class="dot"></span>Client</span><span class="pill"><span class="dot"></span>Gemini</span>
+        </div>
+        <div class="cols">
+          <!-- left: draft -->
+          <div class="card">
+            <h4>Draft</h4>
+            <table class="t"><thead><tr><th>Lane</th><th>Yours</th><th>Enemy</th></tr></thead><tbody>
+              <tr><td class="muted">Top</td><td>Ornn <span class="res">mana</span></td><td>Darius <span class="res">mana</span></td></tr>
+              <tr><td class="muted">Jgl</td><td>Lee Sin <span class="res">energy</span></td><td>Graves <span class="ok">✓</span></td></tr>
+              <tr><td class="muted">Mid</td><td>Ahri</td><td>LeBlanc</td></tr>
+              <tr><td class="muted">Bot</td><td><b>Aphelios</b></td><td>Draven</td></tr>
+              <tr><td class="muted">Sup</td><td>Lulu</td><td>Nautilus <span class="assumed">?</span></td></tr></tbody></table>
+            <span class="label"><span class="ok">✓</span> confirmed · <span class="assumed">?</span> assumed, checked on the loading screen</span>
+            <div class="cap" style="margin-top:4px">Their threats</div>
+            <ul class="tight muted"><li>LeBlanc: burst from fog</li><li>Nautilus hook into Draven all-in</li></ul>
+          </div>
+          <!-- middle: plan -->
+          <div class="card">
+            <div class="thesis"><span class="cap" style="color:var(--gold)">Game plan</span><div>Fight around early dragons with Lulu; Aphelios scales, so don't lose lane to Draven.</div></div>
+            <div class="row"><span class="pill" style="color:var(--gold);border-color:rgba(226,190,98,0.4)">Laning</span><span class="pill">Mid game</span><span class="pill">Late game</span><span class="label" style="margin-left:auto">switches by the clock in game</span></div>
+            <div class="row" style="align-items:flex-start;gap:18px">
+              <div style="flex:1;display:grid;gap:4px"><span class="cap">Trade pattern</span><ul class="tight"><li>Severum + Gravitum when Draven throws axes wide</li><li>Back off while his W is up</li></ul></div>
+              <div style="flex:1;display:grid;gap:4px"><span class="cap">Wave</span><ul class="tight"><li>Freeze near tower until level 6</li><li>Slow push before 4:30 for dragon</li></ul></div>
+            </div>
+            <span class="cap">Reminders</span>
+            <div class="tl">
+              <div class="axis"></div>
+              <div class="m" style="left:8%;background:var(--bad)"></div><div class="m" style="left:14%;background:var(--gold)"></div>
+              <div class="m" style="left:20%;background:var(--blue)"></div><div class="m" style="left:34%;background:var(--purple)"></div>
+              <div class="m" style="left:46%;background:var(--gold)"></div><div class="m" style="left:62%;background:var(--good)"></div>
+              <div class="m" style="left:80%;background:var(--gold)"></div>
+              <span class="tick" style="left:0">0:00</span><span class="tick" style="left:40%">14:00</span><span class="tick" style="left:71%">25:00</span><span class="tick" style="left:100%;transform:translateX(-100%)">35:00</span>
+            </div>
+          </div>
+          <!-- right: loadout -->
+          <div class="card">
+            <div class="row"><span class="tile ca">AP</span><div><h4>Aphelios</h4><span class="label">Bot · mana</span></div><span class="pill" style="margin-left:auto;color:var(--good)">Set ✓</span></div>
+            <div class="row"><span class="rune key"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span></div>
+            <span class="muted" style="font-size:12.5px">Lethal Tempo · Flash (F) + Heal (D)</span>
+            <span class="cap">Item set · in the client shop</span>
+            <div class="row" style="gap:5px"><span class="tile sm i1">1</span><span class="tile sm i2">2</span><span class="tile sm i3">3</span><span class="tile sm i4">4</span><span class="tile sm i5">B</span></div>
+            <div style="font-size:12px" class="muted"><b style="color:var(--ink)">Situational:</b> Guardian Angel if divers reach you · Mercurial if hook-locked</div>
+            <span class="cap">First back</span>
+            <div class="row" style="font-size:12.5px"><span class="tile sm i5">BF</span>B. F. Sword → Infinity Edge</div>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="card" style="flex-direction:row"><div class="row"><span class="cap" style="color:var(--gold)">Your focus</span><span>Ward before crossing river after 15:00</span></div></div>
+          <div class="card"><div class="row"><span class="cap">Last 10</span><span>6–4 · CS@10 71 · deaths &lt;14:00 1.6</span><span class="label" style="margin-left:auto">History →</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="proscons">
+      <div class="pc good"><h4>Good for</h4><ul><li>Players with a second screen: one glance shows everything</li><li>No clicking during champ select's last 30 seconds</li></ul></div>
+      <div class="pc bad"><h4>Watch out</h4><ul><li>Needs a wide window (about 1280 px); cramped on one screen next to the client</li><li>A lot to take in on first use</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ===================== 2. GAME FLOW ===================== -->
+  <section class="block" id="flow">
+    <h2>2 · Game Flow</h2>
+    <p class="why"><b>One step at a time, following the game.</b> A step bar across the top moves on by itself, and each step shows only what
+      matters then, in large type: in champ select, your loadout and a short "before you load in" checklist; on the loading screen, the
+      confirmed lanes and the game plan; after the game, the review. History slides in from the right edge.</p>
+    <div class="scroll">
+      <div class="win gf">
+        <div class="titlebar">
+          <div class="menu"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <svg class="crest16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#173f66" stroke="#d6b04e" stroke-width="10"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#f0d27e"/></svg>
+          <span class="t">LoL Coach</span>
+          <div class="caption"><span>&#x2014;</span><span>&#x25A1;</span><span>&#x2715;</span></div>
+        </div>
+        <div class="stepper">
+          <div class="step done"><span class="n">✓</span>Lobby</div><span class="step-line"></span>
+          <div class="step on"><span class="n">2</span>Champ select</div><span class="step-line"></span>
+          <div class="step"><span class="n">3</span>Loading screen</div><span class="step-line"></span>
+          <div class="step"><span class="n">4</span>In game</div><span class="step-line"></span>
+          <div class="step"><span class="n">5</span>Review</div>
+        </div>
+        <div class="stage">
+          <div style="display:grid;gap:16px;align-content:start">
+            <div class="hero"><span class="tile lg ca">AP</span><div><h3>Aphelios, bot</h3><span class="muted">vs Draven + Nautilus · runes and spells set in the client ✓</span></div></div>
+            <div class="card">
+              <div class="row"><span class="rune key"></span><div><b>Lethal Tempo</b><div class="label">Precision · Domination · tuned once every pick was in</div></div>
+                <span class="pill" style="margin-left:auto">Flash (F) + Heal (D)</span></div>
+            </div>
+            <div class="card">
+              <div class="row"><h4>Item set</h4><span class="label">saved to the client shop</span></div>
+              <div class="big-items">
+                <div class="slot"><span class="tile lg i1">1</span>Infinity Edge</div><div class="slot"><span class="tile lg i2">2</span>Phantom Dancer</div>
+                <div class="slot"><span class="tile lg i3">3</span>Lord Dominik's</div><div class="slot"><span class="tile lg i4">4</span>Bloodthirster</div>
+                <div class="slot"><span class="tile lg i5">B</span>Berserker's</div>
+              </div>
+              <div class="muted" style="font-size:12.5px"><b style="color:var(--ink)">Last two slots:</b> Guardian Angel if divers reach you · Mercurial if Nautilus hook-locks you</div>
+            </div>
+          </div>
+          <div style="display:grid;gap:12px;align-content:start">
+            <div class="card">
+              <h4>Before you load in</h4>
+              <div class="check"><span class="box on">✓</span><div>Runes and spells set</div></div>
+              <div class="check"><span class="box"></span><div>Plan your first back: <b>B. F. Sword</b> (1300 gold)</div></div>
+              <div class="check"><span class="box"></span><div>Level 1: hold the tri-bush with Lulu</div></div>
+              <div class="check" style="border:none"><span class="box"></span><div>Your focus: ward before crossing river after 15:00</div></div>
+            </div>
+            <div class="next"><span class="dot" style="background:var(--warn)"></span>Next: on the loading screen, lanes are confirmed and your game plan appears here.</div>
+          </div>
+          <div class="drawer-tab">History ›</div>
+        </div>
+      </div>
+    </div>
+    <div class="mini-steps">
+      <div class="mini"><span class="cap">Step 3 · Loading screen</span><b>Lanes confirmed</b><span class="muted">"Nautilus is support ✓ · Graves is jungle ✓". Game plan thesis, then the laning card. Tab to see the full plan.</span></div>
+      <div class="mini"><span class="cap">Step 4 · In game</span><b>Window steps back</b><span class="muted">Shows the current phase and next reminder in large type for a second screen; the in-game overlays carry on as now.</span></div>
+      <div class="mini"><span class="cap">Step 5 · Review</span><b>Coach's notes</b><span class="muted">Verdict, key moments timeline, and the one focus for next game, which carries into the next step 2 checklist.</span></div>
+    </div>
+    <div class="proscons">
+      <div class="pc good"><h4>Good for</h4><ul><li>Clear and calm: never more than one job on screen</li><li>Works on one screen or two; easiest to learn</li><li>The focus for next game shows up as a checklist item</li></ul></div>
+      <div class="pc bad"><h4>Watch out</h4><ul><li>To see something from another step (say the plan during champ select) you click back to it</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ===================== 3. COMPANION ===================== -->
+  <section class="block" id="companion">
+    <h2>3 · Companion</h2>
+    <p class="why"><b>A slim panel that docks beside the League client.</b> For one screen: the panel snaps to the client's edge and stays out of
+      its way. Sections are cards that open and close, and the one that matters now opens by itself. It can expand to a full window on a second screen.</p>
+    <div class="scroll">
+      <div class="desk">
+        <div class="client">
+          <div class="ct">LEAGUE OF LEGENDS · CHAMP SELECT</div>
+          <div class="slots"><div></div><div></div><div></div><div></div><div></div></div>
+          <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="slots r"><div></div><div></div><div></div><div></div><div></div></div>
+          <div class="lbl">the League client</div>
+        </div>
+        <div class="comp">
+          <div class="head">
+            <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <svg class="crest16" viewBox="0 0 120 120"><path d="M60 6 L106 20 V58 C106 86 85 104 60 114 C35 104 14 86 14 58 V20 Z" fill="#173f66" stroke="#d6b04e" stroke-width="10"/><path d="M30 46 h42 a22 22 0 1 1 -22 22 v-6 h-20 z" fill="#f0d27e"/></svg>
+            <span class="phase">Champ select · 0:24</span>
+            <span class="label" style="margin-left:auto">⤢ expand</span>
+          </div>
+          <div class="stack">
+            <div class="acc">
+              <div class="h"><span class="tile sm ca">AP</span>Loadout <span class="pill" style="color:var(--good);font-weight:400">Set ✓</span><span class="chev">⌃</span></div>
+              <div class="b">
+                <div class="row"><span class="rune key"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span><span class="rune"></span></div>
+                <span class="muted" style="font-size:12.5px">Lethal Tempo · Flash (F) + Heal (D)</span>
+                <div class="row" style="gap:5px"><span class="tile sm i1">1</span><span class="tile sm i2">2</span><span class="tile sm i3">3</span><span class="tile sm i4">4</span><span class="tile sm i5">B</span></div>
+                <span class="label">Last two: Guardian Angel if divers · Mercurial if hook-locked</span>
+              </div>
+            </div>
+            <div class="acc"><div class="h">Lanes <span class="sum">Graves jungle ✓ · Nautilus support ?</span><span class="chev">⌄</span></div></div>
+            <div class="acc"><div class="h">Game plan <span class="sum">ready on the loading screen</span><span class="chev">⌄</span></div></div>
+            <div class="acc"><div class="h" style="color:var(--gold)">Your focus <span class="sum">ward before crossing river</span><span class="chev">⌄</span></div></div>
+            <div class="acc"><div class="h">Last game <span class="sum">Win · 7/2/9 · CS@10 78</span><span class="chev">⌄</span></div></div>
+          </div>
+          <div class="dock"><span class="btn accent" style="flex:1;justify-content:center">Import again</span><span class="btn">History</span></div>
+        </div>
+        <div class="snap">snaps to the client's edge</div>
+      </div>
+    </div>
+    <div class="proscons">
+      <div class="pc good"><h4>Good for</h4><ul><li>One screen: sits next to the client without covering champ select</li><li>Quick to scan; closed cards keep a one-line summary</li></ul></div>
+      <div class="pc bad"><h4>Watch out</h4><ul><li>Narrow: long plans need scrolling or expanding</li><li>Snapping to the client window needs testing on different resolutions</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARE ===================== -->
+  <section class="block" id="compare">
+    <h2>Compare</h2>
+    <div class="scroll">
+      <table class="cmp">
+        <thead><tr><th></th><th>1 · Command Center</th><th>2 · Game Flow</th><th>3 · Companion</th></tr></thead>
+        <tbody>
+          <tr><td>Best setup</td><td>Second screen</td><td>One or two screens</td><td>One screen</td></tr>
+          <tr><td>How you move</td><td>Nothing to move: one screen updates</td><td>Steps move on by themselves</td><td>Cards open by themselves</td></tr>
+          <tr><td>Champ select</td><td>Draft, plan and loadout side by side</td><td>Loadout big, plus a short checklist</td><td>Loadout card, others summarised</td></tr>
+          <tr><td>In game</td><td>Phase column and reminder timeline</td><td>Current phase in large type</td><td>Hides; overlays take over</td></tr>
+          <tr><td>Learning curve</td><td>Medium</td><td>Lowest</td><td>Low</td></tr>
+          <tr><td>Build effort</td><td>Medium</td><td>Medium</td><td>Highest (window snapping)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="why"><b>My recommendation: Game Flow</b>, with the Companion's compact mode as an option later. It fits the "clean and simple"
+      feedback best, works on any screen setup, and its checklist is a natural home for the focus from the last review. Command Center is
+      the strongest for second-screen players; it could become a "show everything" view inside Game Flow.</p>
+    <p class="why"><b>Questions for the tester:</b> which layout feels right in a real game day: 1, 2 or 3? And do you play with a second screen?</p>
+  </section>
+</div>
+</body>
+</html>
